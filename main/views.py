@@ -4,3 +4,6 @@ from django.http import HttpResponse
 
 def saludo(request):
     return HttpResponse('hola mundo')
+
+def registro(request):
+    return HttpResponse('Registro')
