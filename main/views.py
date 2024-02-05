@@ -4,6 +4,15 @@ from django.http import HttpResponse
 
 def saludo(request):
     return HttpResponse('hola mundo')
+def home(request):
+    return render(request,'home.html')
 
 def registro(request):
-    return HttpResponse('Registro')
+    return render(request,'registro.html')
+
+def login(request):
+    return render(request,'login.html')
+
+
+def servicios(request):
+    return render(request,'servicios.html')
