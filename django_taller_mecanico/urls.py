@@ -17,11 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from main import views
+from autenticacion import views as v_auth
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
-    path('registro/', views.registro,name='registro'),
-    path('login/', views.login, name='login'),
+    path('registro/', v_auth.registro,name='registro'),
+    path('login/', v_auth.login, name='login'),
     path('servicios/', views.servicios, name='servicios'),
     path('contacto/', views.contacto, name='contacto'),
     path('preguntasfrec/', views.preguntasfrec, name='preguntasfrec'),

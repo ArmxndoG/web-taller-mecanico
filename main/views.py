@@ -7,9 +7,6 @@ def saludo(request):
 def home(request):
     return render(request,'home.html')
 
-def registro(request):
-    return render(request,'registro.html')
-
 def login(request):
     return render(request,'login.html')
 
