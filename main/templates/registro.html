@@ -9,15 +9,16 @@
 <body> 
     {% block content %}
     <h1>Registro</h1>
-    <!--<form action="/registro/" method="POST">
-        {% csrf_token %} <!-- token generado por el servidor 
+    <form action="/registro/" method="POST">
+        {{error}}
+        {% csrf_token %} <!--token generado por el servidor--> 
         {{form.as_p}}
 
         <button>
             Registrarse
         </button>
 
-    </form>-->
+    </form>
     {% endblock %}
     
 </body>
