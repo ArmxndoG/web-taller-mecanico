@@ -7,14 +7,10 @@
 </head>
 <body>
     <ul>
+        
+        {% if user.is_authenticated %}
         <li>
             <a href="/">Inicio</a>
-        </li>
-        <li>
-            <a href="{% url 'registro' %}">Registro</a>
-        </li>
-        <li>
-            <a href="{% url 'login' %}">Inicio de sesión</a>
         </li>
         <li>
             <a href="{% url 'servicios' %}">Servicios</a>
@@ -28,6 +24,33 @@
         <li>
             <a href="{% url 'acerca' %}">Acerca de nosotros</a>
         </li>
+
+        <li>
+            <a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
+        </li>
+        {% else %}
+        <li>
+            <a href="/">Inicio</a>
+        </li>
+        <li>
+            <a href="{% url 'registro' %}">Registro</a>
+        </li>
+        <li>
+            <a href="{% url 'iniciar_sesion' %}">Inicio de sesión</a>
+        </li>
+        <li>
+            <a href="{% url 'servicios' %}">Servicios</a>
+        </li>
+        <li>
+            <a href="{% url 'contacto' %}">Contacto</a>
+        </li>
+        <li>
+            <a href="{% url 'preguntasfrec' %}">Preguntas Frecuentes</a>
+        </li>
+        <li>
+            <a href="{% url 'acerca' %}">Acerca de nosotros</a>
+        </li>
+        {% endif %}
     </ul>
 
     {% block content %}

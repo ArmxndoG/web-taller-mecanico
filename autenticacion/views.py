@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from .models import User
 from .forms import RegistrarUsuario
-from django.contrib.auth import login
+from django.contrib.auth import login,logout,authenticate
 from django.db import IntegrityError #Error de integridad en la base de datos, para manejar la excepción
 
 # Create your views here.
@@ -27,8 +27,8 @@ def registro(request):
                                                 email = request.POST['email'], tel = request.POST['tel'] ,username = request.POST['username'], password = request.POST['password1'])
                 print(f"REGISTRO: {user}")
                 user.save()
-                login(request,user) #se crea una cookie 
-                return redirect('login')
+                #login(request,user) #se crea una cookie (sesión) 
+                return redirect('iniciar_sesion')
             
             except IntegrityError:
                 
@@ -41,7 +41,27 @@ def registro(request):
                         'form': RegistrarUsuario,
                         'error': 'Las contraseñas no coinciden'
                     })
+def cerrar_sesion(request):
+    logout(request)
+    return redirect('home')
 
 
 def inicio_sesion(request):
-    return render(request,'login.html')
+    if request.method == 'GET':
+         return render(request,'iniciar_sesion.html',{
+            'form': AuthenticationForm
+        }) 
+    else:
+        print(request.POST)
+        #autenticar que el usuario y contraseña se enecuentren en la base de datos
+        user = authenticate(request, username=request.POST['username'], password=request.POST['password']) 
+
+        if user is None: #Si no se encuentra el usuario y contraseña
+            return render(request, 'iniciar_sesion.html',{
+                'form': AuthenticationForm,
+                'error': 'Usuario o contraseña incorrectos',
+            })
+        else:
+            login(request,user) #guardar su sesión
+            return redirect('home')
+    

@@ -9,6 +9,16 @@
 <body>
     {% block content %}
     <h1>Inicio de sesión</h1>
+    <form action="/iniciar_sesion/" method="POST" >
+        {{error}}
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <button>
+            Iniciar Sesión
+        </button>
+
+    </form>
     {% endblock %}
     
 </body>
