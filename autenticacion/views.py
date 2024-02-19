@@ -65,3 +65,5 @@ def inicio_sesion(request):
             login(request,user) #guardar su sesión
             return redirect('home')
     
+def citas(request):
+    return render(request,'citas.html')
