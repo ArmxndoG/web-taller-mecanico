@@ -47,21 +47,34 @@ def cerrar_sesion(request):
 
 
 def inicio_sesion(request):
+    
     if request.method == 'GET':
          return render(request,'iniciar_sesion.html',{
             'form': AuthenticationForm
-        }) 
+        })
     else:
-        print(request.POST)
-        #autenticar que el usuario y contraseña se enecuentren en la base de datos
-        user = authenticate(request, username=request.POST['username'], password=request.POST['password']) 
+         
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
 
-        if user is None: #Si no se encuentra el usuario y contraseña
+        if user is not None:
+            login(request,user)
+    
+            # Verifica el valor de is_staff
+            if user.is_staff:
+                # Usuario es un encargado
+                login(request,user)
+                return redirect('panel_encargado')  # Cambia 'vista_encargado' con la URL de la vista de encargado
+            else:
+                # Usuario es un usuario regular
+                login(request,user)
+                return redirect('home')  # Cambia 'home' con la URL de la página principal del usuario
+        else:
             return render(request, 'iniciar_sesion.html',{
                 'form': AuthenticationForm,
                 'error': 'Usuario o contraseña incorrectos',
             })
-        else:
-            login(request,user) #guardar su sesión
-            return redirect('home')
+
+            
     
