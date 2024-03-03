@@ -78,3 +78,5 @@ def inicio_sesion(request):
 
             
     
+def citas(request):
+    return render(request,'citas.html')
