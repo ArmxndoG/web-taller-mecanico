@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from .models import User
+from .forms import CitaForm 
 from .forms import RegistrarUsuario
 from django.contrib.auth import login,logout,authenticate
 from django.db import IntegrityError #Error de integridad en la base de datos, para manejar la excepción
@@ -77,6 +78,15 @@ def inicio_sesion(request):
             })
 
             
-    
-def citas(request):
-    return render(request,'citas.html')
+def agendarCita(request):
+    if request.method == 'GET':
+        form = CitaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Puedes hacer más acciones después de guardar la cita, como redireccionar a una página de éxito.
+            return redirect('contacto')
+    else:
+        form = CitaForm()
+
+    return render(request, 'citas.html', {'form': form})
+
