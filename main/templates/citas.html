@@ -8,8 +8,14 @@
 </head>
 <body>
     {% block content %}
-    <h1>ANASHE</h1>
-    
+    <form action = "/citas/" method="post">
+        {{error}}
+        {% csrf_token %}
+        {{form.as_p}}
+        <button>
+            Agendar cita
+        </button>
+    </form>
 </body>
     {% endblock %}
 </html>

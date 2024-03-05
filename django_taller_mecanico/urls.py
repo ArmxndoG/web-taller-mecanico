@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from main import views
 from autenticacion import views as v_auth
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
@@ -28,7 +29,7 @@ urlpatterns = [
     path('contacto/', views.contacto, name='contacto'),
     path('preguntasfrec/', views.preguntasfrec, name='preguntasfrec'),
     path('acerca/', views.acerca, name='acerca'),
-    path('citas/',v_auth.citas, name='citas'),
+    path('citas/',v_auth.agendarCita, name='citas'),
     path('panel_encargado', views.panelEncargado, name='panel_encargado'),
     
 ]
