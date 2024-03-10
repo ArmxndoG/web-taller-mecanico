@@ -8,8 +8,8 @@
 </head>
 <body>
     {% block content %}
-    <form action = "/citas/" method="post">
-        {{error}}
+    <form action = "/citas/" method="POST">
+        
         {% csrf_token %}
         {{form.as_p}}
         <button>

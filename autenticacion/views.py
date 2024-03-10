@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from .models import User
-from .forms import CitaForm 
-from .forms import RegistrarUsuario
+from .forms import RegistrarUsuario,CitaForm
+from .models import Cita,DetalleCita
 from django.contrib.auth import login,logout,authenticate
 from django.db import IntegrityError #Error de integridad en la base de datos, para manejar la excepción
 
@@ -79,14 +79,33 @@ def inicio_sesion(request):
 
             
 def agendarCita(request):
+    
     if request.method == 'GET':
-        form = CitaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            # Puedes hacer más acciones después de guardar la cita, como redireccionar a una página de éxito.
-            return redirect('contacto')
+        return render(request,'citas.html',{
+            'form':CitaForm
+            
+        })
     else:
-        form = CitaForm()
+        cita_form = CitaForm(request.POST)
+        
+        if cita_form.is_valid():
+            cita = cita_form.save(commit=False)
+            cita.usuario = request.user #agregando el campo id_usuario con la sesión iniciada
+            cita.save()#Guardando los datos en la cita
+            
+             # Obtener el servicio seleccionado en el checkbox
+            servicios_seleccionados = cita_form.cleaned_data['servicios']
 
-    return render(request, 'citas.html', {'form': form})
+            for servicio in servicios_seleccionados:
+                DetalleCita.objects.create(cita=cita, servicio=servicio, total=servicio.precio)#Damos de alta los datos en detalle_cita
+            
+            #form.save_m2m() #Guarda la relación muchos a muchos
+            return redirect('home')
+        else:
+            return render(request, 'citas.html',{
+                'form': CitaForm,
+                'error': 'Algo salio mal, intente de nuevo'
+            })
+    
+  
 
