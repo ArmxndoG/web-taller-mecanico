@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estatus de cita</title>
+    {% extends 'layouts/base.html' %}
+</head>
+<body>
+    {% block content %}
+    <h1>Estatus de Cita</h1>
+    <p><strong>ID de Cita:</strong> {{ cita.id }}</p>
+    <p><strong>Modelo del Carro:</strong> {{ cita.modelo_carro }}</p>
+    <p><strong>Color:</strong> {{ cita.color }}</p>
+    <p><strong>Placas:</strong> {{ cita.placas }}</p>
+    <!-- Aquí puedes mostrar más detalles de la cita, como la fecha, la hora, etc. -->
+    <h2>Retroalimentación del Mecánico</h2>
+    <p>{{ cita.retroalimentacion }}</p>
+
+    {% endblock %}
+        
+</body>
+</html>

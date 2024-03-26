@@ -1,10 +1,11 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from .models import User
 from .forms import RegistrarUsuario,CitaForm
 from .models import Cita,DetalleCita
 from django.contrib.auth import login,logout,authenticate
 from django.db import IntegrityError #Error de integridad en la base de datos, para manejar la excepción
+from django.contrib.auth.decorators import login_required #Función decoradora para verificar que haya un usuario logeado (Protejer URL's)
 
 # Create your views here.
 
@@ -42,6 +43,7 @@ def registro(request):
                         'form': RegistrarUsuario,
                         'error': 'Las contraseñas no coinciden'
                     })
+@login_required 
 def cerrar_sesion(request):
     logout(request)
     return redirect('home')
@@ -77,7 +79,7 @@ def inicio_sesion(request):
                 'error': 'Usuario o contraseña incorrectos',
             })
 
-            
+@login_required         
 def agendarCita(request):
     
     if request.method == 'GET':
@@ -106,6 +108,39 @@ def agendarCita(request):
                 'form': CitaForm,
                 'error': 'Algo salio mal, intente de nuevo'
             })
-    
-  
+            
+@login_required 
+def estatus_cita(request,cita_id):
+    cita = get_object_or_404(Cita, id = cita_id, usuario = request.user)
+    print(cita)
+    # Renderizar el template de estatus de cita con la información de la cita
+    return render(request, 'estatus_cita.html', {'cita': cita})
 
+    
+@login_required
+def panel_encargado(request):
+    citas_pendientes = Cita.objects.filter(estado='pendiente')
+    print("n_citas: ",citas_pendientes.count())
+    for cita in citas_pendientes:
+        print(cita)
+    citas_en_proceso = Cita.objects.filter(estado='en proceso')
+    citas_finalizadas = Cita.objects.filter(estado='finalizada')
+    
+    return render(request, 'panelEncargado.html', {
+        'citas_en_espera': citas_pendientes,
+        'citas_en_proceso': citas_en_proceso,
+        'citas_finalizadas': citas_finalizadas
+    })
+@login_required
+def modificar_estado_cita(request, cita_id):
+    cita = get_object_or_404(Cita, id=cita_id)
+    # Modificar el estado de la cita de "en espera" a "en proceso"
+    cita.estado = 'en proceso'
+    cita.save()
+    return redirect('panel_encargado')
+
+def eliminar_cita(request, cita_id):
+    cita = get_object_or_404(Cita, id=cita_id)
+    # Eliminar la cita de la base de datos
+    cita.delete()
+    return redirect('panel_encargado')

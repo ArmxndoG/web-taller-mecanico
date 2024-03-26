@@ -22,5 +22,3 @@ def acerca(request):
 def preguntasfrec(request):
     return render(request,'preguntasfrec.html')
 
-def panelEncargado(request):
-    return render(request, 'panelEncargado.html')

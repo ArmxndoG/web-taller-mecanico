@@ -30,6 +30,10 @@ urlpatterns = [
     path('preguntasfrec/', views.preguntasfrec, name='preguntasfrec'),
     path('acerca/', views.acerca, name='acerca'),
     path('citas/',v_auth.agendarCita, name='citas'),
-    path('panel_encargado', views.panelEncargado, name='panel_encargado'),
+    path('panel_encargado/', v_auth.panel_encargado, name='panel_encargado'),
+    path('modificar_estado/<int:cita_id>', v_auth.modificar_estado_cita, name='modificar_estado_cita'),
+    path('eliminar_cita/<int:cita_id>', v_auth.eliminar_cita, name='eliminar_cita'),
+    #path('estatus_cita/<int:cita_id>', v_auth.estatus_cita, name='estatus_cita'),
+    
     
 ]
