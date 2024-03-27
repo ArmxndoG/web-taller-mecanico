@@ -120,17 +120,52 @@ def estatus_cita(request,cita_id):
 @login_required
 def panel_encargado(request):
     citas_pendientes = Cita.objects.filter(estado='pendiente')
-    print("n_citas: ",citas_pendientes.count())
-    for cita in citas_pendientes:
-        print(cita)
     citas_en_proceso = Cita.objects.filter(estado='en proceso')
     citas_finalizadas = Cita.objects.filter(estado='finalizada')
+    
+    print("Citas en espera: ",citas_pendientes.count())
+    for cita1 in citas_pendientes:
+        print(cita1)
+    
+    print("Citas en proceso: ", citas_en_proceso.count())
+    for cita2 in citas_en_proceso:
+        print(cita2)
+        
+    
+    print("Citas finalizadas: " , citas_en_proceso.count())
+    for cita3 in citas_en_proceso:
+        print(cita3)
     
     return render(request, 'panelEncargado.html', {
         'citas_en_espera': citas_pendientes,
         'citas_en_proceso': citas_en_proceso,
         'citas_finalizadas': citas_finalizadas
     })
+    
+def detalle_cita_enProceso(request, cita_id):
+    cita = get_object_or_404(Cita, id = cita_id, estado = "en proceso")
+    
+    # Obtener todos los servicios asociados a esta cita
+    servicios_cita = cita.detallecita_set.all()
+    
+    # Lista para almacenar todas las fases de servicio
+    fases_servicio = []
+    # Lista para almacenar todos los servicios
+    servicios = []
+    
+    # Iterar sobre cada servicio y obtener sus fases asociadas
+    for detalle_cita in servicios_cita:
+        servicio = detalle_cita.servicio
+        servicios.append(servicio)
+        fases_servicio.extend(servicio.fase_set.all())
+    print(f"servicios asociados: {servicios}")
+        
+    return render(request, 'detalle_cita_enProceso.html',{
+        'cita':cita,
+        'servicios':servicios,
+        'fases_servicio':fases_servicio
+    })
+    
 @login_required
 def modificar_estado_cita(request, cita_id):
     cita = get_object_or_404(Cita, id=cita_id)

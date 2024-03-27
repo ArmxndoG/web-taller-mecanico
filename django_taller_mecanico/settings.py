@@ -119,6 +119,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+import os 
+MEDIA_URL = '/media/' #carpeta que almacenará las imagenes que se van a subir
+MEDIA_ROOT   = os.path.join(BASE_DIR,'media')
+
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

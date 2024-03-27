@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de la cita</title>
+    {% extends 'layouts/base_encargado.html' %}
+</head>
+<body>
+    {% block content %}
+    <h1>Detalle de Cita en Proceso</h1>
+    <h2>Información de la Cita</h2>
+    <p><strong>Modelo del Carro:</strong> {{ cita.modelo_carro }}</p>
+    <p><strong>Color:</strong> {{ cita.color }}</p>
+    <p><strong>Placas:</strong> {{ cita.placas }}</p>
+    <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
+    <p><strong>Hora:</strong> {{ cita.hora }}</p>
+
+    <h2>Servicios Asociados</h2>
+    <ul>
+        {% for servicio in servicios %}
+            <li>
+                
+                    <p>{{ servicio.nombre }} </p>
+                
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% endblock %}
+    
+</body>
+</html>

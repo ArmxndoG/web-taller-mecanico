@@ -52,7 +52,7 @@ class ImagenFase(models.Model):
     fase = models.ForeignKey(Fase, on_delete=models.CASCADE)
     cita = models.ForeignKey(Cita, on_delete=models.CASCADE)
     servicio = models.ForeignKey(Servicio, on_delete = models.CASCADE, default=0)
-    imagen_path = models.CharField(max_length=255)
+    imagen = models.ImageField(upload_to="imagenes_bd/", null=True)
     fecha_subida = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

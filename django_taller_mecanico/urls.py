@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path
 from main import views
 from autenticacion import views as v_auth
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,7 +35,12 @@ urlpatterns = [
     path('panel_encargado/', v_auth.panel_encargado, name='panel_encargado'),
     path('modificar_estado/<int:cita_id>', v_auth.modificar_estado_cita, name='modificar_estado_cita'),
     path('eliminar_cita/<int:cita_id>', v_auth.eliminar_cita, name='eliminar_cita'),
+    path('detalle_cita_en_proceso/<int:cita_id>', v_auth.detalle_cita_enProceso, name='detalle_cita_en_proceso'),
     #path('estatus_cita/<int:cita_id>', v_auth.estatus_cita, name='estatus_cita'),
-    
-    
 ]
+#Si se encuentra en desarrollo, en producción se tiene que configurar otra cosa
+if settings.DEBUG:#Si está en producción...
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+    
+
+

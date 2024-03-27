@@ -36,11 +36,19 @@
     
     <div id="en_proceso" class="tabcontent">
         <h2>Citas en Proceso</h2>
-        {% for cita in citas_en_proceso %}
-        <p>{{ cita.id }}  {{cita.modelo_carro}} {{cita.placas}}</p>
-            <!-- Agregar más detalles de la cita -->
-        {% endfor %}
+            {% for cita in citas_en_proceso %}
+                <p>{{cita.id}}</p>
+                <p>{{cita.modelo_carro}}</p>
+                <p>{{cita.placas}}</p>
+
+                <a href="{% url 'detalle_cita_en_proceso' cita.id %}">ver detalle</a>
+                {% endfor %}
     </div>
+        
+            
+        
+   
+        
     
     <div id="finalizadas" class="tabcontent">
         <h2>Citas Finalizadas</h2>
