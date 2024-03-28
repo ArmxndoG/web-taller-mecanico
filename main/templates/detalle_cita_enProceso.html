@@ -21,7 +21,7 @@
         {% for servicio in servicios %}
             <li>
                 
-                    <p>{{ servicio.nombre }} </p>
+                    <a href="{% url 'detalle_servicio' servicio.id %}">{{ servicio.nombre }} </a>
                 
             </li>
         {% endfor %}

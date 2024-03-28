@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from .models import User
 from .forms import RegistrarUsuario,CitaForm
-from .models import Cita,DetalleCita
+from .models import Cita,DetalleCita,Servicio
 from django.contrib.auth import login,logout,authenticate
 from django.db import IntegrityError #Error de integridad en la base de datos, para manejar la excepción
 from django.contrib.auth.decorators import login_required #Función decoradora para verificar que haya un usuario logeado (Protejer URL's)
@@ -142,7 +142,7 @@ def panel_encargado(request):
         'citas_finalizadas': citas_finalizadas
     })
     
-def detalle_cita_enProceso(request, cita_id):
+'''def detalle_cita_enProceso(request, cita_id):
     cita = get_object_or_404(Cita, id = cita_id, estado = "en proceso")
     
     # Obtener todos los servicios asociados a esta cita
@@ -150,6 +150,7 @@ def detalle_cita_enProceso(request, cita_id):
     
     # Lista para almacenar todas las fases de servicio
     fases_servicio = []
+    
     # Lista para almacenar todos los servicios
     servicios = []
     
@@ -159,11 +160,31 @@ def detalle_cita_enProceso(request, cita_id):
         servicios.append(servicio)
         fases_servicio.extend(servicio.fase_set.all())
     print(f"servicios asociados: {servicios}")
-        
+    print(f"fases del servicio {fases_servicio}")
     return render(request, 'detalle_cita_enProceso.html',{
         'cita':cita,
         'servicios':servicios,
         'fases_servicio':fases_servicio
+    })'''
+@login_required
+def detalle_cita_enProceso(request, cita_id):
+    cita = get_object_or_404(Cita, id=cita_id, estado="en proceso")
+    servicios_cita = cita.detallecita_set.all()
+    servicios = [detalle_cita.servicio for detalle_cita in servicios_cita]
+    print(servicios)
+    return render(request, 'detalle_cita_enProceso.html', {
+        'cita': cita,
+        'servicios': servicios,
+    })
+@login_required
+def detalle_servicio(request, servicio_id):
+    servicio = get_object_or_404(Servicio,id = servicio_id)
+    fases_servicio = servicio.fase_set.all()
+    print(f"Servicio: {servicio}")
+    print(f"Fases asociadas: {fases_servicio}")
+    return render(request, 'detalle_servicio.html',{
+        'servicio':servicio,
+        'fases_servicio': fases_servicio,
     })
     
 @login_required

@@ -36,6 +36,7 @@ urlpatterns = [
     path('modificar_estado/<int:cita_id>', v_auth.modificar_estado_cita, name='modificar_estado_cita'),
     path('eliminar_cita/<int:cita_id>', v_auth.eliminar_cita, name='eliminar_cita'),
     path('detalle_cita_en_proceso/<int:cita_id>', v_auth.detalle_cita_enProceso, name='detalle_cita_en_proceso'),
+    path('detalle_servicio/<int:servicio_id>', v_auth.detalle_servicio, name='detalle_servicio'),
     #path('estatus_cita/<int:cita_id>', v_auth.estatus_cita, name='estatus_cita'),
 ]
 #Si se encuentra en desarrollo, en producción se tiene que configurar otra cosa
