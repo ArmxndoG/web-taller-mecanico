@@ -10,6 +10,7 @@
     {% block content %}
     <h1>Detalle de Cita en Proceso</h1>
     <h2>Información de la Cita</h2>
+    <p><strong>Id cita:</strong> {{ cita.id }}</p>
     <p><strong>Modelo del Carro:</strong> {{ cita.modelo_carro }}</p>
     <p><strong>Color:</strong> {{ cita.color }}</p>
     <p><strong>Placas:</strong> {{ cita.placas }}</p>
@@ -21,7 +22,7 @@
         {% for servicio in servicios %}
             <li>
                 
-                    <a href="{% url 'detalle_servicio' servicio.id %}">{{ servicio.nombre }} </a>
+                    <a href="{% url 'detalle_servicio' cita.id servicio.id %}">{{ servicio.nombre }} </a>
                 
             </li>
         {% endfor %}

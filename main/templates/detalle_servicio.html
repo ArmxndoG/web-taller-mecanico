@@ -14,6 +14,18 @@
             <ul>
                 {% for fase in fases_servicio %}
                     <li>{{ fase.nombre }}</li>
+                    {% if fase.imagen_path %}
+                    <img src="{{ fase.imagen_path }}" alt="Imagen de la fase">
+                    {% endif %}
+                    <!-- Formulario para subir imagen -->
+                    <form action="{% url 'subir_imagen' fase.id %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="cita_id" value="{{ cita.id }}">
+                        <input type="hidden" name="servicio_id" value="{{ servicio.id }}">
+                        <input type="hidden" name="fase_id" value="{{ fase.id }}">
+                        <input type="file" name="imagen" accept="image/png, image/gif, image/jpeg">
+                        <button type="submit">Subir Imagen</button>
+                    </form>
                 {% endfor %}
             </ul>
         </li>

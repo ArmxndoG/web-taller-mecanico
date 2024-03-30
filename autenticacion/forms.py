@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import User,Cita,Servicio,DetalleCita
+from .models import User,Cita,Servicio,DetalleCita, ImagenFase
 
 class RegistrarUsuario(UserCreationForm):
     class Meta:
@@ -24,12 +24,15 @@ class CitaForm(forms.ModelForm):
             queryset=None,
             widget=forms.CheckboxSelectMultiple
         )
-    
-    
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Inicializar queryset para el campo de servicios
         self.fields['servicios'].queryset = Servicio.objects.all()
     
+
+class ImagenForm(forms.ModelForm):
+    class Meta:
+        model = ImagenFase
+        fields = ['fase', 'cita','servicio','imagen']
         
