@@ -1,36 +1,68 @@
+{% extends 'layouts/base.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle Servicio {{servicio.nombre}}</title>
+    <title>Detalle Servicio</title>
 </head>
 <body>
     {% block content %}
-    <h1>Detalles del servicio {{servicio.nombre}}</h1>
+    <h1>Detalles del servicio {{ servicio.nombre }}</h1>
     <ul>
         <li>
             {{ servicio.nombre }}:
             <ul>
                 {% for fase in fases_servicio %}
-                    <li>{{ fase.nombre }}</li>
-                    {% if fase.imagen_path %}
-                    <img src="{{ fase.imagen_path }}" alt="Imagen de la fase">
-                    {% endif %}
-                    <!-- Formulario para subir imagen -->
-                    <form action="{% url 'subir_imagen' fase.id %}" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <input type="hidden" name="cita_id" value="{{ cita.id }}">
-                        <input type="hidden" name="servicio_id" value="{{ servicio.id }}">
-                        <input type="hidden" name="fase_id" value="{{ fase.id }}">
-                        <input type="file" name="imagen" accept="image/png, image/gif, image/jpeg">
-                        <button type="submit">Subir Imagen</button>
-                    </form>
+                    <li>
+                        <div style="display: inline-block;">
+                            <h2>{{ fase.nombre }}</h2>
+                            {% if fase.imagenfase_set.exists %}
+                                {% for imagen_fase in fase.imagenfase_set.all %}
+                                    <img src="{{ imagen_fase.imagen.url }}" alt="Imagen de la fase" style="max-width: 200px;">
+                                    <form action="{% url 'eliminar_imagen' fase.id %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="cita_id" value="{{ cita.id }}">
+                                        <input type="hidden" name="servicio_id" value="{{ servicio.id }}">
+                                        <input type="hidden" name="fase_id" value="{{ fase.id }}">
+                                        <button type="submit">Eliminar Imagen</button>
+                                    </form>
+                                {% endfor %}
+                            {% else %}
+                                <!-- Formulario para subir imagen -->
+                                <form action="{% url 'subir_imagen' fase.id %}" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="cita_id" value="{{ cita.id }}">
+                                    <input type="hidden" name="servicio_id" value="{{ servicio.id }}">
+                                    <input type="hidden" name="fase_id" value="{{ fase.id }}">
+                                    <input type="file" name="imagen" id="imagen-input" accept="image/png, image/gif, image/jpeg" >
+                                    <button type="submit" id="boton-subir-imagen" disabled>Subir Imagen</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </li>
                 {% endfor %}
             </ul>
         </li>
     </ul>
-    {% endblock %}
+    <script>
+        // Selecciona el input de la imagen y el botón de subir imagen
+        const imagenInput = document.getElementById('imagen-input');
+        const botonSubirImagen = document.getElementById('boton-subir-imagen');
     
+        // Agrega un evento de cambio al input de la imagen
+        imagenInput.addEventListener('change', function() {
+            // Verifica si se ha seleccionado un archivo
+            if (imagenInput.files.length > 0) {
+                // Habilita el botón de subir imagen si se ha seleccionado un archivo
+                botonSubirImagen.disabled = false;
+            } else {
+                // Deshabilita el botón de subir imagen si no se ha seleccionado ningún archivo
+                botonSubirImagen.disabled = true;
+            }
+        });
+    </script>
+{% endblock %}
+
 </body>
 </html>

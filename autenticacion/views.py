@@ -167,6 +167,8 @@ def detalle_servicio(request, cita_id, servicio_id):
         'servicio':servicio,
         'fases_servicio': fases_servicio,
     })
+    
+@login_required  
 def subir_imagen(request, fase_id):
     if request.method == 'POST':
         cita_id = request.POST.get('cita_id')
@@ -179,8 +181,7 @@ def subir_imagen(request, fase_id):
         servicio = get_object_or_404(Servicio, id=servicio_id)
         
         print(f"id cita: {cita_id}, servicio: {servicio_id}, fase: {fase_id}")
-        #imagen = request.FILES.get('imagen')
-        
+      
         # Guardar la imagen en la tabla ImagenFase
         imagen_fase = ImagenFase(cita = cita, servicio = servicio, fase = fase, imagen = imagen)
         imagen_fase.save()
@@ -189,6 +190,15 @@ def subir_imagen(request, fase_id):
     else:
         return redirect('detalle_servicio', cita_id = cita_id, servicio_id = servicio_id)
     
+@login_required
+def eliminar_imagen(request, fase_id):
+    cita_id = request.POST.get('cita_id')
+    fase_id = request.POST.get('fase_id')
+    servicio_id = request.POST.get('servicio_id')
+    
+    imagen_fase = get_object_or_404(ImagenFase, fase = fase_id)
+    imagen_fase.delete()
+    return redirect('detalle_servicio', cita_id = cita_id, servicio_id = servicio_id)
 
     
 @login_required
