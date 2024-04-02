@@ -218,6 +218,7 @@ def eliminar_cita(request, cita_id):
 
 #tomar los servicios de la base de datos y mostrarlos en servicios.html
 def lista_de_servicios(request):
+    print("Servicios")
     print("La vista lista_de_servicios se está ejecutando.")  # Agregar este mensaje de prueba
     servicios = Servicio.objects.all()
     print(servicios)  # Agregar esta línea para verificar si se están recuperando los servicios correctamente
