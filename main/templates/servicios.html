@@ -12,15 +12,6 @@
     <h1>Listado de Lista de Servicios</h1>
     <ul>
         {% for servicio in servicios %}
-        <li>
-            <strong>Nombre:</strong> {{ servicio.nombre }} <br>
-            <strong>Descripción:</strong> {{ servicio.descripcion }} <br>
-            <strong>Precio:</strong> ${{ servicio.precio }}
-        </li>
-        {% endfor %}
-    </ul>
-    <ul>
-        {% for servicio in servicios %}
             <li>
                 <h2>{{ servicio.nombre }}</h2>
                 <p>{{ servicio.descripcion }}</p>
