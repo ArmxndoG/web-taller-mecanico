@@ -8,8 +8,16 @@
 </head>
 <body>
     {% block content %}
-    <h1>Servicios</h1>
-    
+    <h1>Lista de Servicios</h1>
+    <ul>
+        {% for servicio in servicios %}
+            <li>
+                <h2>{{ servicio.nombre }}</h2>
+                <p>{{ servicio.descripcion }}</p>
+                <!--<p>Precio: {{ servicio.precio }}</p>-->
+            </li>
+        {% endfor %}
+    </ul>
     {% endblock %}
 </body>
 </html>

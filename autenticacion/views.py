@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from .models import User
+from .models import Servicio
 from .forms import RegistrarUsuario,CitaForm, ImagenForm
 from .models import Cita,DetalleCita,Servicio,Fase, ImagenFase
 from django.contrib.auth import login,logout,authenticate
@@ -214,3 +215,12 @@ def eliminar_cita(request, cita_id):
     # Eliminar la cita de la base de datos
     cita.delete()
     return redirect('panel_encargado')
+
+#tomar los servicios de la base de datos y mostrarlos en servicios.html
+def lista_de_servicios(request):
+    print("La vista lista_de_servicios se está ejecutando.")  # Agregar este mensaje de prueba
+    servicios = Servicio.objects.all()
+    print(servicios)  # Agregar esta línea para verificar si se están recuperando los servicios correctamente
+    return render(request, 'servicios.html', {'servicios': servicios})
+
+
