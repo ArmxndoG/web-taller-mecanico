@@ -8,7 +8,17 @@
 </head>
 <body>
     {% block content %}
-    <h1>Servicios</h1>
+    
+    <h1>Listado de Servicios</h1>
+    <ul>
+        {% for servicio in servicios %}
+        <li>
+            <strong>Nombre:</strong> {{ servicio.nombre }} <br>
+            <strong>Descripción:</strong> {{ servicio.descripcion }} <br>
+            <strong>Precio:</strong> ${{ servicio.precio }}
+        </li>
+        {% endfor %}
+    </ul>
     
     {% endblock %}
 </body>

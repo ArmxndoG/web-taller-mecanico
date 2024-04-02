@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from .models import User
 from .forms import RegistrarUsuario,CitaForm, ImagenForm
-from .models import Cita,DetalleCita,Servicio,Fase, ImagenFase
+from .models import Cita,DetalleCita,Servicio,Fase, ImagenFase,Servicio
 from django.contrib.auth import login,logout,authenticate
 from django.db import IntegrityError #Error de integridad en la base de datos, para manejar la excepción
 from django.contrib.auth.decorators import login_required #Función decoradora para verificar que haya un usuario logeado (Protejer URL's)
@@ -214,3 +214,4 @@ def eliminar_cita(request, cita_id):
     # Eliminar la cita de la base de datos
     cita.delete()
     return redirect('panel_encargado')
+

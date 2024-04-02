@@ -27,7 +27,7 @@ urlpatterns = [
     path('registro/', v_auth.registro,name='registro'),
     path('iniciar_sesion/', v_auth.inicio_sesion, name='iniciar_sesion'),
     path('cerrar_sesion/', v_auth.cerrar_sesion, name='cerrar_sesion'),
-    path('servicios/', views.servicios, name='servicios'),
+    #path('servicios/', views.servicios, name='servicios'),
     path('contacto/', views.contacto, name='contacto'),
     path('preguntasfrec/', views.preguntasfrec, name='preguntasfrec'),
     path('acerca/', views.acerca, name='acerca'),
@@ -39,6 +39,7 @@ urlpatterns = [
     path('detalle_cita_en_proceso/<int:cita_id>/detalle_servicio/<int:servicio_id>/', v_auth.detalle_servicio, name='detalle_servicio'),
     path('subir_imagen/<int:fase_id>/', v_auth.subir_imagen, name='subir_imagen'),
     path('eliminar_imagen/<int:fase_id>/', v_auth.eliminar_imagen, name='eliminar_imagen'),
+    
     
     
     
