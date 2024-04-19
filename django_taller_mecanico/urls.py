@@ -40,6 +40,7 @@ urlpatterns = [
     path('subir_imagen/<int:fase_id>/', v_auth.subir_imagen, name='subir_imagen'),
     path('eliminar_imagen/<int:fase_id>/', v_auth.eliminar_imagen, name='eliminar_imagen'),
     path('servicios/', v_auth.lista_de_servicios, name='lista_de_servicios'),
+    path('lista_citas/', v_auth.lista_citas_cliente, name='lista_citas_cliente'),
     
     
     

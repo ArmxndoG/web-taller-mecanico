@@ -110,12 +110,22 @@ def agendarCita(request):
                 'error': 'Algo salio mal, intente de nuevo'
             })
             
-@login_required 
-def estatus_cita(request,cita_id):
+@login_required             
+def lista_citas_cliente(request):
+    citas_cliente = Cita.objects.filter(usuario = request.user)
+    titulo = "Citas del cliente"
+    return render(request, "lista_citas_cliente.html",{
+        'titulo': titulo,
+        'citas' : citas_cliente,
+    })
+    
+    
+
+'''def estatus_cita(request,cita_id):
     cita = get_object_or_404(Cita, id = cita_id, usuario = request.user)
     print(cita)
     # Renderizar el template de estatus de cita con la información de la cita
-    return render(request, 'estatus_cita.html', {'cita': cita})
+    return render(request, 'estatus_cita.html', {'cita': cita})'''
 
     
 @login_required
@@ -132,7 +142,7 @@ def panel_encargado(request):
     for cita2 in citas_en_proceso:
         print(cita2)
         
-    
+  
     print("Citas finalizadas: " , citas_en_proceso.count())
     for cita3 in citas_en_proceso:
         print(cita3)

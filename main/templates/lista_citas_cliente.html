@@ -1,0 +1,43 @@
+{% extends 'layouts/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{titulo}}</title>
+    
+</head>
+<body>
+    {% block content %}
+
+    <main class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                
+                <h1 class="text-center display-3 py-5">{% block title %}{{ titulo }}{% endblock %}</h1>
+                
+                <ul class="list-group">
+                    {% for cita in citas %}
+                    <a class="list-group-item" href="">
+                        <header class="d-flex justify-content-between">
+                        
+                            <p>{{cita.usuario}}</p>
+                        </header>
+                            <p>{{cita.modelo_carro}}</p>
+                            <p>{{cita.color}}</p>
+                            <p>{{cita.placas}}</p>
+                            <p>{{cita.fecha}}</p>
+                            <p>{{cita.hora}}</p>
+                            <h1 class="fw-bold text-success">{{cita.estado}}</h1>
+                    </a>
+                        
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    {% endblock %}
+    
+</body>
+</html>
