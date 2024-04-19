@@ -112,11 +112,16 @@ def agendarCita(request):
             
 @login_required             
 def lista_citas_cliente(request):
-    citas_cliente = Cita.objects.filter(usuario = request.user)
+    #citas_cliente = Cita.objects.filter(usuario = request.user)
+    citas_en_espera = Cita.objects.filter(usuario = request.user, estado = "pendiente")
+    citas_en_proceso = Cita.objects.filter(usuario = request.user, estado = "en proceso")
+    citas_finalizadas = Cita.objects.filter(usuario = request.user, estado = "finalizada")
     titulo = "Citas del cliente"
     return render(request, "lista_citas_cliente.html",{
         'titulo': titulo,
-        'citas' : citas_cliente,
+        'citas_en_espera' : citas_en_espera,
+        'citas_en_proceso' : citas_en_proceso,
+        'citas_finalizadas' : citas_en_espera,
     })
     
     
