@@ -98,9 +98,9 @@ def agendarCita(request):
             
              # Obtener el servicio seleccionado en el checkbox
             servicios_seleccionados = cita_form.cleaned_data['servicios']
-
+    
             for servicio in servicios_seleccionados:
-                DetalleCita.objects.create(cita=cita, servicio=servicio, total=servicio.precio)#Damos de alta los datos en detalle_cita
+                DetalleCita.objects.create(cita=cita, servicio=servicio)#Damos de alta los datos en detalle_cita
             
             #form.save_m2m() #Guarda la relación muchos a muchos
             return redirect('home')
@@ -108,6 +108,43 @@ def agendarCita(request):
             return render(request, 'citas.html',{
                 'form': CitaForm,
                 'error': 'Algo salio mal, intente de nuevo'
+            })
+            
+
+@login_required  
+def detalle_cita_cliente(request,cita_id):
+    cita = get_object_or_404(Cita, id = cita_id, usuario = request.user)
+    detalles_cita = cita.detallecita_set.all()
+    print(detalles_cita)
+    if request.method == 'GET':
+        form = CitaForm(instance = cita)
+        return render(request,'detalle_cita_cliente.html',{
+            'cita': cita,
+            'form':form,
+            'titulo': "Modificación de cita" 
+        })
+    else:
+        try:
+            form = CitaForm(request.POST, instance = cita)
+            
+            if form.is_valid():
+                form.save()
+                # Actualizar los servicios de la cita
+                servicios_seleccionados = form.cleaned_data['servicios']
+                print(f"Servicios seleccionados: {servicios_seleccionados}")
+                cita.servicios.set(servicios_seleccionados)
+                 # Actualizar los detalles de la cita
+                for detalle in detalles_cita:
+                    detalle.servicio = detalle.cita.servicios.first()  # Asignar el primer servicio seleccionado
+                    print(cita.detallecita_set.all())
+                return redirect('lista_citas_cliente')
+
+        except ValueError:
+            return render(request, 'deralle_cita_cliente',{
+                'cita': cita,
+                'form': form,
+                'error': "Error al actualizar cita",
+                'titulo': "Modificación de cita"
             })
             
 @login_required             
@@ -121,18 +158,17 @@ def lista_citas_cliente(request):
         'titulo': titulo,
         'citas_en_espera' : citas_en_espera,
         'citas_en_proceso' : citas_en_proceso,
-        'citas_finalizadas' : citas_en_espera,
+        'citas_finalizadas' : citas_finalizadas,
     })
     
-    
-
-'''def estatus_cita(request,cita_id):
+@login_required 
+def eliminar_cita_cliente(request, cita_id):
     cita = get_object_or_404(Cita, id = cita_id, usuario = request.user)
-    print(cita)
-    # Renderizar el template de estatus de cita con la información de la cita
-    return render(request, 'estatus_cita.html', {'cita': cita})'''
-
-    
+    if request.method == 'POST':
+        cita.delete()
+        return redirect('lista_citas_cliente')
+        
+            
 @login_required
 def panel_encargado(request):
     citas_pendientes = Cita.objects.filter(estado='pendiente')

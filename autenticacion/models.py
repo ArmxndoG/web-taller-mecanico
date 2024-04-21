@@ -26,7 +26,6 @@ class Cita(models.Model):
     hora = models.TimeField()
     estado = models.CharField(max_length=50, default='pendiente')
     retroalimentacion = models.TextField(null=True, blank=True)
-    
     servicios = models.ManyToManyField(Servicio, through='DetalleCita')
     
     def __str__(self):
@@ -36,8 +35,7 @@ class Cita(models.Model):
 class DetalleCita(models.Model):
     cita = models.ForeignKey('Cita', on_delete=models.CASCADE)
     servicio = models.ForeignKey('Servicio', on_delete=models.CASCADE)
-    total = models.FloatField()
-
+    
     def __str__(self):
         return f"DetalleCita #{self.id} - Cita #{self.cita.id} - Servicio #{self.servicio.id}"
     

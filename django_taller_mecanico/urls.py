@@ -41,12 +41,10 @@ urlpatterns = [
     path('eliminar_imagen/<int:fase_id>/', v_auth.eliminar_imagen, name='eliminar_imagen'),
     path('servicios/', v_auth.lista_de_servicios, name='lista_de_servicios'),
     path('lista_citas/', v_auth.lista_citas_cliente, name='lista_citas_cliente'),
+    path('detalle_cita_cliente/<int:cita_id>', v_auth.detalle_cita_cliente, name='detalle_cita_cliente'),
+    path('eliminar_cita_cliente/<int:cita_id>', v_auth.eliminar_cita_cliente, name='eliminar_cita_cliente'),
     
-    
-    
-    #path('detalle_cita_en_proceso/<int:cita_id>/detalle_servicio/<int:servicio_id>/', v_auth.detalle_servicio, name='detalle_servicio'),
-    #path('detalle_servicio/<int:servicio_id>', v_auth.detalle_servicio, name='detalle_servicio'),
-    #path('estatus_cita/<int:cita_id>', v_auth.estatus_cita, name='estatus_cita'),
+  
 ]
 #Si se encuentra en desarrollo, en producción se tiene que configurar otra cosa
 if settings.DEBUG:#Si está en producción...

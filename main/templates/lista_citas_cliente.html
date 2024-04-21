@@ -18,7 +18,7 @@
                 
                 <ul class="list-group">
                     {% for cita in citas_en_espera %}
-                    <a class="list-group-item" href="">
+                    <a class="list-group-item" href="{% url 'detalle_cita_cliente' cita.id %}">
                         <header class="d-flex justify-content-between">
                         
                             <p>{{cita.usuario}}</p>
@@ -29,10 +29,7 @@
                             <p>{{cita.fecha}}</p>
                             <p>{{cita.hora}}</p>
                             <h1 class="fw-bold text-success">{{cita.estado}}</h1>
-                            <form action="" method="post">
-                                {% csrf_token %}
-                                <button type="submit">Modificar cita</button>
-                            </form>
+                            
                     </a>
                         
                     {% endfor %}
