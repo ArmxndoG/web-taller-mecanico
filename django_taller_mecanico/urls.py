@@ -43,6 +43,7 @@ urlpatterns = [
     path('lista_citas/', v_auth.lista_citas_cliente, name='lista_citas_cliente'),
     path('detalle_cita_cliente/<int:cita_id>', v_auth.detalle_cita_cliente, name='detalle_cita_cliente'),
     path('eliminar_cita_cliente/<int:cita_id>', v_auth.eliminar_cita_cliente, name='eliminar_cita_cliente'),
+    path('estatus_cita/<int:cita_id>', v_auth.estatus_cita, name='estatus_cita'),
     
   
 ]

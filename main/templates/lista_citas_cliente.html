@@ -29,14 +29,14 @@
                             <p>{{cita.fecha}}</p>
                             <p>{{cita.hora}}</p>
                             <h1 class="fw-bold text-success">{{cita.estado}}</h1>
-                            
+      
                     </a>
                         
                     {% endfor %}
                 </ul>
                 <ul class="list-group">
                     {% for cita in citas_en_proceso %}
-                    <a class="list-group-item" href="">
+                    <a class="list-group-item" href="{% url 'estatus_cita' cita.id %}">
                         <header class="d-flex justify-content-between">
                         
                             <p>{{cita.usuario}}</p>
@@ -47,10 +47,8 @@
                             <p>{{cita.fecha}}</p>
                             <p>{{cita.hora}}</p>
                             <h1 class="fw-bold text-success">{{cita.estado}}</h1>
-                            <form action="" method="post">
-                                {% csrf_token %}
-                                <button type="submit">Ver estatus</button>
-                            </form>
+                            
+
                     </a>
                         
                     {% endfor %}

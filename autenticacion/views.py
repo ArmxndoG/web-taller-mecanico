@@ -167,6 +167,8 @@ def eliminar_cita_cliente(request, cita_id):
     if request.method == 'POST':
         cita.delete()
         return redirect('lista_citas_cliente')
+    
+
         
             
 @login_required
@@ -195,6 +197,50 @@ def panel_encargado(request):
     })
     
 @login_required
+def estatus_cita(request, cita_id):
+    print(cita_id)
+    cita = get_object_or_404(Cita, id = cita_id)
+    servicios_cita = cita.detallecita_set.all()
+    servicios = [detalle_cita.servicio for detalle_cita in servicios_cita]
+    
+    # Lista para almacenar la información de cada servicio
+    info_servicios = []
+
+    # Iterar sobre cada servicio
+    for servicio in servicios:
+        # Obtener las fases asociadas al servicio
+        fases_servicio = servicio.fase_set.all()
+
+        # Lista para almacenar la información de cada fase
+        info_fases = []
+
+        # Iterar sobre cada fase
+        for fase in fases_servicio:
+            # Obtener las imágenes asociadas a la fase
+            imagenes_fase = fase.imagenfase_set.all()
+
+            # Agregar la información de la fase a la lista
+            info_fases.append({
+                'fase': fase,
+                'imagenes': imagenes_fase
+            })
+
+        # Agregar la información del servicio y sus fases a la lista de servicios
+        info_servicios.append({
+            'servicio': servicio,
+            'fases': info_fases
+        })
+
+    # Pasar los datos a la plantilla
+    return render(request, 'estatus_cita.html', {
+        'cita': cita,
+        'servicios': info_servicios
+    })
+ 
+    
+    
+    
+@login_required
 def detalle_cita_enProceso(request, cita_id):
     cita = get_object_or_404(Cita, id=cita_id, estado="en proceso")
     servicios_cita = cita.detallecita_set.all()
@@ -202,7 +248,7 @@ def detalle_cita_enProceso(request, cita_id):
     print(servicios)
     return render(request, 'detalle_cita_enProceso.html', {
         'cita': cita,
-        'servicios': servicios,
+        'servicios': servicios, 
     })
     
 @login_required

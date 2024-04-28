@@ -8,14 +8,40 @@
 </head>
 <body>
     {% block content %}
-    <h1>Estatus de Cita</h1>
-    <p><strong>ID de Cita:</strong> {{ cita.id }}</p>
-    <p><strong>Modelo del Carro:</strong> {{ cita.modelo_carro }}</p>
-    <p><strong>Color:</strong> {{ cita.color }}</p>
-    <p><strong>Placas:</strong> {{ cita.placas }}</p>
-    <!-- Aquí puedes mostrar más detalles de la cita, como la fecha, la hora, etc. -->
-    <h2>Retroalimentación del Mecánico</h2>
-    <p>{{ cita.retroalimentacion }}</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Estatus de Cita</h1>
+                <h2>{{ cita.modelo_carro }}</h2>
+                <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
+                <p><strong>Hora:</strong> {{ cita.hora }}</p>
+            </div>
+        </div>
+    
+        {% for servicio_info in servicios %}
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h3 class="mb-3">Servicio: {{ servicio_info.servicio.nombre }}</h3>
+                {% for fase_info in servicio_info.fases %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Fase: {{ fase_info.fase.nombre }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            {% for imagen_fase in fase_info.imagenes %}
+                            <div class="col-md-3 mb-3">
+                                <img src="{{ imagen_fase.imagen.url }}" alt="Imagen de fase" class="img-fluid">
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 
     {% endblock %}
         
