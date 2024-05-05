@@ -8,17 +8,39 @@
 </head>
 <body> 
     {% block content %}
-    <h1>Acerca de Nosotros</h1>
-    <p>La historia de nuestra empresa tiene sus raíces en la década de 1970, cuando nuestro fundador, un asegurador de profesión, decidió diversificar sus actividades hacia el sector automotriz. En ese momento, las restricciones legales impedían a un asegurador poseer un taller mecánico, por lo que la empresa se estableció a nombre de un socio cercano.
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa; /* Color de fondo */
+            color: #343a40; /* Color del texto */
+            padding-top: 50px; /* Espacio superior */
+        }
 
-        Después de un período operativo, circunstancias inesperadas llevaron a la transferencia de la propiedad del taller a ese socio. A pesar de este revés, la pasión por los vehículos continuó siendo un rasgo distintivo en la familia. Fue en la década de 1990 cuando la segunda generación, compuesta por miembros de la familia, decidió reactivar la actividad empresarial en el ámbito automotriz.
-        
-        Iniciando como un taller que ofrecía servicios de venta de autopartes, reparaciones mecánicas, así como trabajos en electrónica y hojalatería, la empresa evolucionó para abordar de manera integral las necesidades del mercado automotriz en constante cambio.
-        
-        Con el tiempo, nuestro taller se adentró en el campo emergente de las reparaciones de computadoras y módulos, convirtiéndose en un centro especializado en reparaciones y diagnósticos electrónicos y mecánicos. Esta transición permitió a la empresa consolidarse como un referente en el sector, alineándose con las demandas tecnológicas emergentes.
-        
-        La tenacidad y el compromiso con la excelencia han sido los pilares fundamentales de nuestra empresa a lo largo de las generaciones. La combinación de experiencia heredada y la adaptación constante a las nuevas tecnologías nos ha permitido no solo sobrevivir sino destacarnos en un mercado automotriz en evolución constante. Nos enorgullece ofrecer servicios integrales respaldados por un legado de dedicación a la excelencia en el servicio automotriz.</p>
-    {% endblock %}
+        h1 {
+            color: #007bff; /* Color del encabezado */
+            margin-bottom: 30px; /* Margen inferior */
+        }
+
+        p {
+            font-size: 18px; /* Tamaño de fuente */
+            line-height: 1.6; /* Espaciado entre líneas */
+            margin-bottom: 20px; /* Margen inferior */
+        }
+    </style>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1 class="text-center">Acerca de Nosotros</h1>
+                <p>La historia de nuestra empresa tiene sus raíces en la década de 1970, cuando nuestro fundador, un asegurador de profesión, decidió diversificar sus actividades hacia el sector automotriz. En ese momento, las restricciones legales impedían a un asegurador poseer un taller mecánico, por lo que la empresa se estableció a nombre de un socio cercano.</p>
+                <p>Después de un período operativo, circunstancias inesperadas llevaron a la transferencia de la propiedad del taller a ese socio. A pesar de este revés, la pasión por los vehículos continuó siendo un rasgo distintivo en la familia. Fue en la década de 1990 cuando la segunda generación, compuesta por miembros de la familia, decidió reactivar la actividad empresarial en el ámbito automotriz.</p>
+                <p>Iniciando como un taller que ofrecía servicios de venta de autopartes, reparaciones mecánicas, así como trabajos en electrónica y hojalatería, la empresa evolucionó para abordar de manera integral las necesidades del mercado automotriz en constante cambio.</p>
+                <p>Con el tiempo, nuestro taller se adentró en el campo emergente de las reparaciones de computadoras y módulos, convirtiéndose en un centro especializado en reparaciones y diagnósticos electrónicos y mecánicos. Esta transición permitió a la empresa consolidarse como un referente en el sector, alineándose con las demandas tecnológicas emergentes.</p>
+                <p>La tenacidad y el compromiso con la excelencia han sido los pilares fundamentales de nuestra empresa a lo largo de las generaciones. La combinación de experiencia heredada y la adaptación constante a las nuevas tecnologías nos ha permitido no solo sobrevivir sino destacarnos en un mercado automotriz en evolución constante. Nos enorgullece ofrecer servicios integrales respaldados por un legado de dedicación a la excelencia en el servicio automotriz.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
     
 </body>
 </html>
