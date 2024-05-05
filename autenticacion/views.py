@@ -196,7 +196,29 @@ def panel_encargado(request):
         'citas_finalizadas': citas_finalizadas
     })
     
-@login_required
+def estatus_cita(request, cita_id):
+    # Obtener la cita
+    cita = get_object_or_404(Cita, id=cita_id)
+    # Obtener todas las imágenes asociadas a la cita
+    imagenes_fase = ImagenFase.objects.filter(cita_id=cita_id)
+
+    # Lista para almacenar información adicional sobre las imágenes de la fase
+    info_imagenes_fase = []
+
+    # Iterar sobre las imágenes de la fase
+    for imagen_fase in imagenes_fase:
+        # Obtener el servicio y la fase asociados a la imagen de la fase actual
+        servicio_id = imagen_fase.servicio_id
+        fase_id = imagen_fase.fase_id
+        # Agregar la información de la imagen, el servicio y la fase a la lista
+        info_imagenes_fase.append({'imagen_fase': imagen_fase, 'servicio_id': servicio_id, 'fase_id': fase_id})
+
+    return render(request, 'estatus_cita.html', {
+        'cita': cita,
+        'info_imagenes_fase': info_imagenes_fase,
+    })
+    
+'''@login_required
 def estatus_cita(request, cita_id):
     print(cita_id)
     cita = get_object_or_404(Cita, id = cita_id)
@@ -235,7 +257,7 @@ def estatus_cita(request, cita_id):
     return render(request, 'estatus_cita.html', {
         'cita': cita,
         'servicios': info_servicios
-    })
+    })'''
  
     
     
@@ -251,21 +273,102 @@ def detalle_cita_enProceso(request, cita_id):
         'servicios': servicios, 
     })
     
+
 @login_required
+
+def detalle_servicio(request, cita_id, servicio_id):
+    cita = get_object_or_404(Cita, id=cita_id, estado="en proceso")
+    servicio = get_object_or_404(Servicio, id=servicio_id)
+    fases_servicio = servicio.fase_set.all()
+    fase_imagen_asociada = []  # Lista de listas para almacenar información
+
+    for fase in fases_servicio:
+        if ImagenFase.objects.filter(cita=cita, servicio=servicio, fase=fase).exists():
+            imagen_fase = ImagenFase.objects.get(cita=cita, servicio=servicio, fase=fase)
+            fase_imagen_asociada.append([fase, True, imagen_fase])
+        else:
+            fase_imagen_asociada.append([fase, False, None])
+
+    return render(request, 'detalle_servicio.html', {
+        'cita': cita,
+        'servicio': servicio,
+        'fase_imagen_asociada': fase_imagen_asociada,
+    })
+    
+'''@login_required
+def detalle_servicio(request, cita_id, servicio_id):
+    cita = get_object_or_404(Cita, id=cita_id, estado="en proceso")
+    servicio = get_object_or_404(Servicio, id=servicio_id)
+    fases_servicio = servicio.fase_set.all()
+    #fases_asociadas = get_object_or_404(ImagenFase, cita = cita_id, servicio = servicio_id)
+    #print(fases_asociadas)
+    imagen_asociada_fase = {}  # Diccionario para almacenar imagen por ID de fase
+    fase_imagen_asociada = []  # Lista de listas para almacenar información
+    
+    for fase in fases_servicio:
+        if ImagenFase.objects.filter(cita=cita.id, servicio=servicio.id, fase=fase.id).exists():
+            imagen_asociada_fase[fase.id] = True
+            imagen_asociada = imagen_asociada_fase[fase.id]
+            fase_imagen_asociada.append([cita.id,servicio.id,fase.id, imagen_asociada])
+        else:
+            imagen_asociada_fase[fase.id] = False
+            
+    
+    print(f"Fases - tiene imagen: {imagen_asociada_fase}")
+
+    
+        
+    print(f"fase imagen asociada {fase_imagen_asociada}")
+    
+    for fase, imagen_asociada in fase_imagen_asociada:
+        if imagen_asociada:
+            print("img/url\t Subir imagen")
+        elif imagen_asociada is None:
+            print("Subir imagen")
+    
+    return render(request, 'detalle_servicio.html', {
+        'cita': cita,
+        'servicio': servicio,
+        'fases_servicio': fases_servicio,
+        'fase_imagen_asociada': fase_imagen_asociada,
+        #'fases_asociadas': fases_asociadas
+    })'''
+    
+'''@login_required
 def detalle_servicio(request, cita_id, servicio_id):
     cita = get_object_or_404(Cita, id=cita_id, estado="en proceso")
     servicio = get_object_or_404(Servicio,id = servicio_id)
-    fases_servicio = servicio.fase_set.all()
+    fases_servicio = servicio.fase_set.all()#Me devuelve las fases de ese servicio 
     
-    
-    print(f"Servicio: {servicio}")
+    #imagen_asociada_fase = []
+    imagen_asociada_fase = {}
+    print(f"Cita: {cita.id}")
+    print(f"Servicio: {servicio.id}")
     print(f"Fases asociadas: {fases_servicio}")
+    
+    #Lista que devuelve True si hay un registro en la tabla ImagenFase y false si no hay un registro     
+    for fase in fases_servicio:
+        print(fase.id, fase.nombre)
+        if ImagenFase.objects.filter(cita = cita.id, servicio = servicio.id, fase=fase.id).exists():
+            #imagen_asociada_fase.append(True)
+            imagen_asociada_fase[fase.id] = True
+        else:
+            #imagen_asociada_fase.append(False)
+            imagen_asociada_fase[fase.id] = False
+                
+   
+    print(f"tiene imagenes {imagen_asociada_fase}")
+
+  
     return render(request, 'detalle_servicio.html',{
         'cita': cita,
         'servicio':servicio,
         'fases_servicio': fases_servicio,
-    })
+        'imagen_asociada_fase':imagen_asociada_fase
+        
+    })'''
     
+   
 @login_required  
 def subir_imagen(request, fase_id):
     if request.method == 'POST':

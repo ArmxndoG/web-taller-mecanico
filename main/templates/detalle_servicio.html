@@ -13,38 +13,34 @@
         <li>
             {{ servicio.nombre }}:
             <ul>
-                {% for fase in fases_servicio %}
-                    <li>
-                        <div style="display: inline-block;">
-                            <h2>{{ fase.nombre }}</h2>
-                            {% if fase.imagenfase_set.exists %}
-                                {% for imagen_fase in fase.imagenfase_set.all %}
-                                    <img src="{{ imagen_fase.imagen.url }}" alt="Imagen de la fase" style="max-width: 200px;">
-                                    <form action="{% url 'eliminar_imagen' fase.id %}" method="post">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="cita_id" value="{{ cita.id }}">
-                                        <input type="hidden" name="servicio_id" value="{{ servicio.id }}">
-                                        <input type="hidden" name="fase_id" value="{{ fase.id }}">
-                                        <button type="submit">Eliminar Imagen</button>
-                                    </form>
-                                {% endfor %}
-                            {% else %}
-                                <!-- Formulario para subir imagen -->
-                                <form action="{% url 'subir_imagen' fase.id %}" method="post" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="cita_id" value="{{ cita.id }}">
-                                    <input type="hidden" name="servicio_id" value="{{ servicio.id }}">
-                                    <input type="hidden" name="fase_id" value="{{ fase.id }}">
-                                    <input type="file" name="imagen" id="imagen-input" accept="image/png, image/gif, image/jpeg" >
-                                    <button type="submit" id="boton-subir-imagen" disabled>Subir Imagen</button>
-                                </form>
-                            {% endif %}
-                        </div>
-                    </li>
+                {% for fase, imagen_asociada, imagen_fase in fase_imagen_asociada %}
+                <div class="fase">
+                    <h3>{{ fase.nombre }}</h3>
+                    {% if imagen_asociada %}
+                    <img src="{{ imagen_fase.imagen.url }}" alt="Imagen de la fase" style="max-width: 200px;">
+                    <form action="{% url 'eliminar_imagen' fase.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="cita_id" value="{{ cita.id }}">
+                        <input type="hidden" name="servicio_id" value="{{ servicio.id }}">
+                        <input type="hidden" name="fase_id" value="{{ fase.id }}">
+                        <button type="submit">Eliminar Imagen</button>
+                    </form>
+                    {% else %}
+                    <form action="{% url 'subir_imagen' fase.id %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="cita_id" value="{{ cita.id }}">
+                        <input type="hidden" name="servicio_id" value="{{ servicio.id }}">
+                        <input type="hidden" name="fase_id" value="{{ fase.id }}">
+                        <input type="file" name="imagen" id="imagen-input" accept="image/png, image/gif, image/jpeg" >
+                        <button type="submit" id="boton-subir-imagen" disabled>Subir Imagen</button>
+                    </form>
+                    {% endif %}
+                </div>
                 {% endfor %}
             </ul>
         </li>
     </ul>
+    
     <script>
         // Selecciona el input de la imagen y el botón de subir imagen
         const imagenInput = document.getElementById('imagen-input');

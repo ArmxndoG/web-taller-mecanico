@@ -13,35 +13,36 @@
             <div class="col-md-12">
                 <h1>Estatus de Cita</h1>
                 <h2>{{ cita.modelo_carro }}</h2>
+                <h2>{{ info_imagen_fase.imagen_fase.servicio.nombre }}</h2>
                 <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
                 <p><strong>Hora:</strong> {{ cita.hora }}</p>
             </div>
         </div>
-    
-        {% for servicio_info in servicios %}
-        <div class="row mt-4">
+
+         <!-- Lista de imágenes -->
+         <div class="row mt-4">
+            <!-- Iterar sobre la información de las imágenes de la fase -->
+            {% for info_imagen_fase in info_imagenes_fase %}
             <div class="col-md-12">
-                <h3 class="mb-3">Servicio: {{ servicio_info.servicio.nombre }}</h3>
-                {% for fase_info in servicio_info.fases %}
-                <div class="card mb-3">
+                <div class="card mb-4">
+                    <!-- Mostrar el nombre de la fase -->
                     <div class="card-header">
-                        <h5 class="card-title mb-0">Fase: {{ fase_info.fase.nombre }}</h5>
+                        <h3 class="card-title">{{ info_imagen_fase.imagen_fase.fase.nombre }}</h3>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            {% for imagen_fase in fase_info.imagenes %}
-                            <div class="col-md-3 mb-3">
-                                <img src="{{ imagen_fase.imagen.url }}" alt="Imagen de fase" class="img-fluid">
-                            </div>
-                            {% endfor %}
-                        </div>
+                        <!-- Mostrar la imagen -->
+                        <img src="{{ info_imagen_fase.imagen_fase.imagen.url }}" class="card-img-top" alt="Imagen de la fase">
                     </div>
                 </div>
-                {% endfor %}
             </div>
+            {% empty %}
+            <div class="col-md-12">
+                <div class="alert alert-info" role="alert">No hay imágenes disponibles para esta fase.</div>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
+    
 
     {% endblock %}
         
