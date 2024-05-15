@@ -32,12 +32,13 @@ def registro(request):
                 user.save()
                 #login(request,user) #se crea una cookie (sesión) 
                 return redirect('iniciar_sesion')
+                #return render(request, 'iniciar_sesion.html')
             
             except IntegrityError:
                 
                 return render(request,'registro.html',{
                         'form': RegistrarUsuario,
-                        'error': 'El usuario ya existe'
+                        'error': 'El usuario ya existe, por favor inicie sesión'
                     })
         else:
             return render(request,'registro.html',{
@@ -69,11 +70,11 @@ def inicio_sesion(request):
             if user.is_staff:
                 # Usuario es un encargado
                 login(request,user)
-                return redirect('panel_encargado')  # Cambia 'vista_encargado' con la URL de la vista de encargado
+                return redirect('panel_encargado')  
             else:
                 # Usuario es un usuario regular
                 login(request,user)
-                return redirect('home')  # Cambia 'home' con la URL de la página principal del usuario
+                return redirect('home')  
         else:
             return render(request, 'iniciar_sesion.html',{
                 'form': AuthenticationForm,
