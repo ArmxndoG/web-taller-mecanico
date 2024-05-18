@@ -5,16 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preguntas Frecuentes</title>
     {% extends 'layouts/base.html' %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    
 </head>
 <body>  
     {% block content %}
-    <h1>Preguntas Frecuentes</h1>
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam a eos magnam, reprehenderit dolore autem hic, ut nulla dolorum, quia eligendi odit. Dolore, dignissimos quod. Id magnam itaque aliquid pariatur!</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum perspiciatis tempore, ex voluptatum porro dolorem aliquid non nam expedita asperiores neque mollitia modi? Expedita debitis quis a temporibus, autem ad.</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad autem in, ullam expedita quasi sequi consequatur laborum distinctio corporis delectus, animi ipsum optio voluptate, corrupti placeat quaerat nisi mollitia rerum?</p>
-    {% endblock %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa; /* Color de fondo */
+            color: #343a40; /* Color del texto */
+            /*padding-top: 50px; /* Espacio superior */
+        }
 
+        .faq-question {
+            cursor: pointer;
+            padding: 10px;
+            background: #f1f1f1;
+            border: 1px solid #ccc;
+            margin-top: 5px;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+        .faq-question.active {
+            background: #e1e1e1;
+            font-weight: bold;
+        }
+    </style>
+    <div class="container">
+        <h1 class="mt-5 mb-4">Preguntas Frecuentes</h1>
+        <div class="faq">
+            <div class="faq-item">
+                <div class="faq-question">¿Necesito una cita previa para llevar mi coche?</div>
+                <div class="faq-answer">Recomendamos hacer una cita previa para asegurar un servicio rápido y eficiente, aunque aceptamos clientes sin cita dependiendo de la disponibilidad.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">¿Cuál es su horario de atención?</div>
+                <div class="faq-answer">Nuestro horario de atención es de lunes a viernes de 9:00 AM a 6:00 PM, y los sábados de 9:00 AM a 5:00 PM. Cerramos los domingos y días festivos.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">¿Ofrecen garantías sobre las reparaciones?</div>
+                <div class="faq-answer">Sí, ofrecemos garantías en todas nuestras reparaciones y piezas utilizadas. La duración de la garantía varía según el tipo de servicio y pieza.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">¿Qué formas de pago aceptan?</div>
+                <div class="faq-answer">Aceptamos efectivo, tarjetas de crédito y débito, y transferencias bancarias.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">¿Pueden trabajar con todas las marcas y modelos de vehículos?</div>
+                <div class="faq-answer">Sí, nuestros técnicos están capacitados para trabajar con una amplia variedad de marcas y modelos, tanto nacionales como importados.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">¿Utilizan piezas originales o genéricas?</div>
+                <div class="faq-answer">Utilizamos tanto piezas originales como alternativas de alta calidad, dependiendo de las necesidades y presupuesto del cliente. Siempre consultamos con el cliente antes de proceder.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">¿Cuánto tiempo tomará la reparación de mi vehículo?</div>
+                <div class="faq-answer">El tiempo de reparación varía según el tipo de servicio requerido. Proporcionamos estimaciones de tiempo una vez que hayamos diagnosticado el problema.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">¿Cómo puedo saber si mi coche necesita mantenimiento?</div>
+                <div class="faq-answer">Consulte el manual de su vehículo para los intervalos de mantenimiento recomendados. También ofrecemos revisiones de diagnóstico para evaluar el estado de su coche.</div>
+            </div>
+            <!-- Agrega más preguntas y respuestas aquí -->
+        </div>
+    </div>
     
-    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var questions = document.querySelectorAll('.faq-question');
+            questions.forEach(function(question) {
+                question.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    var answer = this.nextElementSibling;
+                    if (answer.style.display == "block") {
+                        answer.style.display = "none";
+                    } else {
+                        answer.style.display = "block";
+                    }
+                });
+            });
+        });
+    </script>
+    {% endblock %}
 </body>
 </html>
