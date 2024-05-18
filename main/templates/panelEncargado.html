@@ -5,59 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Encargado</title>
     {% extends 'layouts/base.html' %}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .tabcontent {
+            display: none;
+        }
+        .tablinks.active {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     {% block content %}
-    <h1>Encargado</h1>
-    <div class="tabs">
-        <button class="tablinks" onclick="showCitas(event, 'en_espera')">En Espera</button>
-        <button class="tablinks" onclick="showCitas(event, 'en_proceso')">En Proceso</button>
-        <button class="tablinks" onclick="showCitas(event, 'finalizadas')">Finalizadas</button>
-    </div>
-    
-    <div id="en_espera" class="tabcontent">
-        <h2>Citas en Espera</h2>
+    <div class="container">
+        <h1 class="my-4">Encargado</h1>
+        <div class="nav nav-tabs">
+            <button class="nav-link tablinks active" onclick="showCitas(event, 'en_espera')">En Espera</button>
+            <button class="nav-link tablinks" onclick="showCitas(event, 'en_proceso')">En Proceso</button>
+            <button class="nav-link tablinks" onclick="showCitas(event, 'finalizadas')">Finalizadas</button>
+        </div>
+        
+        <div id="en_espera" class="tabcontent" style="display: block;">
+            <h2 class="my-4">Citas en Espera</h2>
             {% for cita in citas_en_espera %}
-                <div class="cita">
-                    <p>{{ cita.id }}  {{cita.modelo_carro}} {{cita.placas}}</p>
-                    <form action="{% url 'modificar_estado_cita' cita.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" onclick="return confirm('¿Estás seguro de modificar el estado de la cita?')" >Marcar como en proceso</button>
-                    </form>
-                    <!-- Agregar un formulario para eliminar la cita -->
-                    <form action="{% url 'eliminar_cita' cita.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" onclick="return confirm('¿Estás seguro de eliminar la cita?')">Eliminar cita</button>
-                    </form>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <p class="card-text">{{ cita.id }} - {{cita.modelo_carro}} - {{cita.placas}}</p>
+                        <form action="{% url 'modificar_estado_cita' cita.id %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary" onclick="return confirm('¿Estás seguro de modificar el estado de la cita?')">Marcar como en proceso</button>
+                        </form>
+                        <form action="{% url 'eliminar_cita' cita.id %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar la cita?')">Eliminar cita</button>
+                        </form>
+                    </div>
                 </div>
-                
             {% endfor %}
-    </div>
-    
-    <div id="en_proceso" class="tabcontent">
-        <h2>Citas en Proceso</h2>
+        </div>
+        
+        <div id="en_proceso" class="tabcontent">
+            <h2 class="my-4">Citas en Proceso</h2>
             {% for cita in citas_en_proceso %}
-                <p>{{cita.id}}</p>
-                <p>{{cita.modelo_carro}}</p>
-                <p>{{cita.placas}}</p>
-
-                <a href="{% url 'detalle_cita_en_proceso' cita.id%}">ver detalle</a>
-                {% endfor %}
+                <div class="card mb-3">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="card-text mb-0">{{ cita.id }} - {{cita.modelo_carro}} - {{cita.placas}}</p>
+                        </div>
+                        <a href="{% url 'detalle_cita_en_proceso' cita.id%}" class="btn btn-info">Ver detalle</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div id="finalizadas" class="tabcontent">
+            <h2 class="my-4">Citas Finalizadas</h2>
+            {% for cita in citas_finalizadas %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <p class="card-text">{{ cita.id }} - {{cita.modelo_carro}} - {{cita.placas}}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-        
-            
-        
-   
-        
     
-    <div id="finalizadas" class="tabcontent">
-        <h2>Citas Finalizadas</h2>
-        {% for cita in citas_finalizadas %}
-        <p>{{ cita.id }}  {{cita.modelo_carro}} {{cita.placas}}</p>
-            <!-- Agregar más detalles de la cita -->
-        {% endfor %}
-    </div>
-    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         function showCitas(evt, status) {
             var i, tabcontent, tablinks;
@@ -67,10 +83,10 @@
             }
             tablinks = document.getElementsByClassName("tablinks");
             for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
+                tablinks[i].classList.remove("active");
             }
             document.getElementById(status).style.display = "block";
-            evt.currentTarget.className += " active";
+            evt.currentTarget.classList.add("active");
         }
     </script>
     {% endblock %}

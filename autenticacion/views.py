@@ -110,6 +110,28 @@ def agendarCita(request):
                 'form': CitaForm,
                 'error': 'Algo salio mal, intente de nuevo'
             })
+            
+@login_required
+def altaServicio(request):
+    
+    if request.method == 'GET':
+        return render(request,'alta_servicio.html',{
+            'form':ServicioForm
+            
+        })
+    else:
+        servicio_form = ServicioForm(request.POST)
+        
+        if servicio_form.is_valid():
+            servicio = servicio_form.save(commit=False)
+            servicio.save()#Guardando los datos en la cita
+            
+            return redirect('gestion_servicios')
+        else:
+            return render(request, 'citas.html',{
+                'form': ServicioForm,
+                'error': 'Algo salio mal, intente de nuevo'
+            })
 @login_required
 def modificacion_servicio(request, servicio_id):
     servicio = get_object_or_404(Servicio, id = servicio_id)
@@ -137,9 +159,9 @@ def modificacion_servicio(request, servicio_id):
             
 @login_required
 def eliminar_servicio(request, servicio_id):
-    cita = get_object_or_404(Cita, id = servicio_id)
+    servicio = get_object_or_404(Servicio, id = servicio_id)
     if request.method == 'POST':
-        cita.delete()
+        servicio.delete()
         return redirect('gestion_servicios')
        
 
@@ -187,10 +209,7 @@ def gestion_servicios(request):
         "servicios": servicios
     })
 
-
-    
-    
-            
+         
 @login_required             
 def lista_citas_cliente(request):
     #citas_cliente = Cita.objects.filter(usuario = request.user)
@@ -211,11 +230,7 @@ def eliminar_cita_cliente(request, cita_id):
     if request.method == 'POST':
         cita.delete()
         return redirect('lista_citas_cliente')
-    
-
-    
-
-        
+  
             
 @login_required
 def panel_encargado(request):
