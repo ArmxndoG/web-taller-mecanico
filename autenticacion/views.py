@@ -262,6 +262,9 @@ def estatus_cita(request, cita_id):
     cita = get_object_or_404(Cita, id=cita_id)
     # Obtener todas las imágenes asociadas a la cita
     imagenes_fase = ImagenFase.objects.filter(cita_id=cita_id)
+    
+    servicios = cita.servicios.all()
+    print(servicios)
 
     # Lista para almacenar información adicional sobre las imágenes de la fase
     info_imagenes_fase = []
