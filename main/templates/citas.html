@@ -8,15 +8,21 @@
 </head>
 <body>
     {% block content %}
-    <form action = "/citas/" method="POST">
-        
-        {% csrf_token %}
-        {{form.as_p}}
-        <button>
-            Agendar cita
-        </button>
-    </form>
-</body>
+    <main class="container py-5">
+        <div class="row">
+            <section class="col-md-4 offset-md-4 mt-5">
+                <form action="/citas/" method="POST" class="card card-body">
+                    <h1 class="text-center">Agendar Cita</h1>
+                    {{ error }}
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn btn-primary d-block mx-auto mt-4">
+                        Agendar cita
+                    </button>
+                </form>
+            </section>
+        </div>
+    </main>
     {% endblock %}
+</body>
 </html>
-
