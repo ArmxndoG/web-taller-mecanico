@@ -5,6 +5,7 @@ from django.forms.widgets import SelectDateWidget
 from datetime import date
 from django.utils.html import format_html
 from django.db import models  # Agrega esta importación
+from django.utils import timezone
 
 class RegistrarUsuario(UserCreationForm):
     class Meta:
@@ -21,6 +22,14 @@ class ServicioForm(forms.ModelForm):
         model = Servicio
         fields = ['nombre', 'descripcion', 'precio']
     
+    
+class CustomDateInput(forms.DateInput):
+    input_type = 'date'
+
+    def __init__(self, *args, **kwargs):
+        kwargs['attrs'] = {'min': timezone.now().strftime('%Y-%m-%d')}
+        super().__init__(*args, **kwargs)
+
 class CitaForm(forms.ModelForm):
     class Meta:
         model = Cita
@@ -30,18 +39,16 @@ class CitaForm(forms.ModelForm):
             'fecha': CustomDateInput(),
             'hora': forms.Select(choices=[('09:00', '9:00'), ('10:00', '10:00'), ('11:00', '11:00')]),
         }
-        
-    servicios = forms.ModelMultipleChoiceField(
-            queryset=None,
-            widget=forms.CheckboxSelectMultiple
-        )
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['servicios'].queryset = Servicio.objects.all()
+    servicios = forms.ModelMultipleChoiceField(
+        queryset=Servicio.objects.all(),
+        widget=forms.CheckboxSelectMultiple
+    )
 
     def clean_fecha(self):
         fecha = self.cleaned_data['fecha']
+        if fecha < timezone.now().date():
+            raise forms.ValidationError("La fecha no puede ser en el pasado.")
         citas_del_dia = Cita.objects.filter(fecha=fecha).count()
         if citas_del_dia >= 5:
             raise forms.ValidationError("No se pueden agendar más de 5 citas para este día.")

@@ -11,11 +11,38 @@
     <main class="container py-5">
         <div class="row">
             <section class="col-md-4 offset-md-4 mt-5">
-                <form action="/citas/" method="POST" class="card card-body">
+                <form action="{% url 'citas' %}" method="POST" class="card card-body">
                     <h1 class="text-center">Agendar Cita</h1>
                     {{ error }}
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    <div class="mb-3">
+                        <label for="modelo_carro">Modelo de carro</label>
+                        <input type="text" name="modelo_carro" id="modelo_carro" class="form-control" placeholder="Escribe el modelo de tu carro">
+                    </div>
+                    <div class="mb-3">
+                        <label for="color">Color</label>
+                        <input type="text" name="color" id="color" class="form-control" placeholder="Escribe el color de tu carro">
+                    </div>
+                    <div class="mb-3">
+                        <label for="placas">Placas</label>
+                        <input type="text" name="placas" id="placas" class="form-control" placeholder="Escribe las placas de tu carro">
+                    </div>
+                    <div class="mb-3">
+                        <label for="fecha">Fecha</label>
+                        <input type="date" name="fecha" id="fecha" class="form-control" min="{{ timezone.now|date:'Y-m-d' }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="hora">Hora</label>
+                        <select name="hora" id="hora" class="form-control">
+                            <option value="09:00">9:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="servicios">Servicios</label>
+                        {{ form.servicios }}
+                    </div>
                     <button class="btn btn-primary d-block mx-auto mt-4">
                         Agendar cita
                     </button>

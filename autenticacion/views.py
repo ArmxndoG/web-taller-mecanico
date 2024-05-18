@@ -99,7 +99,7 @@ def agendarCita(request):
             
              # Obtener el servicio seleccionado en el checkbox
             servicios_seleccionados = cita_form.cleaned_data['servicios']
-    
+            #form.save_m2m()  # Para guardar las relaciones many-to-many
             for servicio in servicios_seleccionados:
                 DetalleCita.objects.create(cita=cita, servicio=servicio)#Damos de alta los datos en detalle_cita
             
