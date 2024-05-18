@@ -16,7 +16,11 @@ class CustomDateInput(forms.DateInput):
         today = date.today()
         super().__init__(attrs={'type': 'date', 'min': today.strftime('%Y-%m-%d')})
 
-
+class ServicioForm(forms.ModelForm):
+    class Meta:
+        model = Servicio
+        fields = ['nombre', 'descripcion', 'precio']
+    
 class CitaForm(forms.ModelForm):
     class Meta:
         model = Cita

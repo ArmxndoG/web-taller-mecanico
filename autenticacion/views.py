@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from .models import User
 from .models import Servicio
-from .forms import RegistrarUsuario,CitaForm, ImagenForm
+from .forms import RegistrarUsuario,CitaForm, ServicioForm, ImagenForm
 from .models import Cita,DetalleCita,Servicio,Fase, ImagenFase,Servicio
 from django.contrib.auth import login,logout,authenticate
 from django.db import IntegrityError #Error de integridad en la base de datos, para manejar la excepción
@@ -110,7 +110,38 @@ def agendarCita(request):
                 'form': CitaForm,
                 'error': 'Algo salio mal, intente de nuevo'
             })
+@login_required
+def modificacion_servicio(request, servicio_id):
+    servicio = get_object_or_404(Servicio, id = servicio_id)
+    if request.method == 'GET':
+        form = ServicioForm(instance = servicio)
+        return render(request, 'modificacion_servicio.html',{
+            'servicio': servicio,
+            'form': form
+        }) 
+    else:
+        try:
+            form = ServicioForm(request.POST, instance = servicio)
             
+            if form.is_valid():
+                form.save()
+                return redirect('gestion_servicios')
+
+        except ValueError:
+            return render(request, 'modificar_servicio',{
+                'servicio': servicio,
+                'form': form,
+                'error': "Error al actualizar servicio",
+                
+            })
+            
+@login_required
+def eliminar_servicio(request, servicio_id):
+    cita = get_object_or_404(Cita, id = servicio_id)
+    if request.method == 'POST':
+        cita.delete()
+        return redirect('gestion_servicios')
+       
 
 @login_required  
 def detalle_cita_cliente(request,cita_id):
@@ -147,6 +178,18 @@ def detalle_cita_cliente(request,cita_id):
                 'error': "Error al actualizar cita",
                 'titulo': "Modificación de cita"
             })
+@login_required
+def gestion_servicios(request):
+    servicios = Servicio.objects.all()
+    print(servicios)
+    
+    return render(request, "gestionServicios.html",{
+        "servicios": servicios
+    })
+
+
+    
+    
             
 @login_required             
 def lista_citas_cliente(request):
@@ -168,6 +211,8 @@ def eliminar_cita_cliente(request, cita_id):
     if request.method == 'POST':
         cita.delete()
         return redirect('lista_citas_cliente')
+    
+
     
 
         
