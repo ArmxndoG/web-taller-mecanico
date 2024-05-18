@@ -78,6 +78,7 @@ footer .container {
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav">
                     {% if user.is_authenticated and user.is_staff %}
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'panel_encargado' %}">Gestionar Citas</a>
                         </li>
@@ -97,9 +98,13 @@ footer .container {
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'citas' %}">Agendar cita</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'lista_citas_cliente' %}">Ver citas agendadas</a>
-                        </li>
+                        {% with user_citas=user.cita_set.all %}
+                        {% if user_citas|length > 0 %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'lista_citas_cliente' %}">Ver citas agendadas</a>
+                            </li>
+                        {% endif %}
+                    {% endwith %}
                     {% endif %}
                 </ul>
             </div>

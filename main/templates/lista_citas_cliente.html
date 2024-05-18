@@ -43,26 +43,28 @@
                     </ul>
                 </div>
                 
+                {% if citas_en_proceso %}
                 <div>
                     <h2 class="text-center">Citas en Proceso</h2>
                     <ul class="list-group">
                         {% for cita in citas_en_proceso %}
-                        <a class="list-group-item list-group-item-action" href="{% url 'estatus_cita' cita.id %}">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <p class="mb-1"><strong>Usuario:</strong> {{ cita.usuario }}</p>
-                                    <p class="mb-1"><strong>Modelo del Carro:</strong> {{ cita.modelo_carro }}</p>
-                                    <p class="mb-1"><strong>Color:</strong> {{ cita.color }}</p>
-                                    <p class="mb-1"><strong>Placas:</strong> {{ cita.placas }}</p>
-                                    <p class="mb-1"><strong>Fecha:</strong> {{ cita.fecha }}</p>
-                                    <p class="mb-1"><strong>Hora:</strong> {{ cita.hora }}</p>
+                            <a class="list-group-item list-group-item-action" href="{% url 'estatus_cita' cita.id %}">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <p class="mb-1"><strong>Usuario:</strong> {{ cita.usuario }}</p>
+                                        <p class="mb-1"><strong>Modelo del Carro:</strong> {{ cita.modelo_carro }}</p>
+                                        <p class="mb-1"><strong>Color:</strong> {{ cita.color }}</p>
+                                        <p class="mb-1"><strong>Placas:</strong> {{ cita.placas }}</p>
+                                        <p class="mb-1"><strong>Fecha:</strong> {{ cita.fecha }}</p>
+                                        <p class="mb-1"><strong>Hora:</strong> {{ cita.hora }}</p>
+                                    </div>
+                                    <h5 class="mb-0 fw-bold text-success">{{ cita.estado }}</h5>
                                 </div>
-                                <h5 class="mb-0 fw-bold text-success">{{ cita.estado }}</h5>
-                            </div>
-                        </a>
+                            </a>
                         {% endfor %}
                     </ul>
                 </div>
+                {% endif %}
             </div>
         </div>
     </main>
