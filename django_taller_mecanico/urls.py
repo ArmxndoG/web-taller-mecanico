@@ -46,6 +46,8 @@ urlpatterns = [
     path('estatus_cita/<int:cita_id>', v_auth.estatus_cita, name='estatus_cita'),
     path('gestion_servicios/', v_auth.gestion_servicios, name='gestion_servicios'),
     path('modificacion_servicios/<int:servicio_id>', v_auth.modificacion_servicio, name='modificar_servicio'),
+    path('eliminar_servicio/<int:servicio_id>', v_auth.eliminar_servicio, name='eliminar_servicio'),
+    path('alta_servicio/', v_auth.altaServicio, name='alta_servicio'),
     
   
 ]

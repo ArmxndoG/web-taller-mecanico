@@ -18,15 +18,14 @@
                         <form method="POST" class="my-form">
                             {% csrf_token %}
                             {{form.as_p}}
-                            <button class="btn btn-primary">
-                                Actualizar
-                            </button>
+                            
+                            <button type="submit" class="btn btn-primary" onclick="return confirm('¿Estás seguro de modificar el servicio?')" >Actualizar</button>
                         </form>
                             
                         </form>
-                        <form action="{% url 'eliminar_cita_cliente' servicio.id %}" method="POST" class="my-form">
+                        <form action="{% url 'eliminar_servicio' servicio.id %}" method="POST" class="my-form">
                             {% csrf_token %}
-                            <button class="btn btn-danger">
+                            <button class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar el servicio?')" >
                                 Borrar
                             </button>
                         

@@ -5,45 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de servicios</title>
     {% extends 'layouts/base.html' %}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .list-group-item {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    </style>
 </head>
 <body>
     {% block content %}
-    <h1>Gestión de servicios</h1>
     <main class="container">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
-                
-                <h1 class="text-center display-3 py-5"></h1>
-                
+            <div class="col-12">
+                <h1 class="text-center mt-4">Gestión de servicios</h1>
+            </div>
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                <div class="text-center my-3">
+                    <a href="{% url 'alta_servicio' %}" class="btn btn-primary">Agregar servicio</a>
+                </div>
                 <ul class="list-group">
                     {% for servicio in servicios %}
-                    <a class="list-group-item" href="{% url 'modificar_servicio' servicio.id %}">
-                        <header class="d-flex justify-content-between">
-                        
-                            <h2>{{servicio.nombre}}</h2>
+                    <a class="list-group-item list-group-item-action mb-3" href="{% url 'modificar_servicio' servicio.id %}">
+                        <header class="d-flex justify-content-between align-items-center w-100">
+                            <h2 class="h5 mb-0 font-weight-bold">{{servicio.nombre}}</h2>
                         </header>
-                            <p>{{servicio.descripcion}}</p>
-                            <p>{{cita.precio}}</p>
-                            
-                            <h1 class="fw-bold text-success">{{cita.estado}}</h1>
-      
+                        <p class="mb-1">{{servicio.descripcion}}</p>
+                        <p class="mb-1">{{servicio.precio}}</p>
+                        <h1 class="fw-bold text-success">{{servicio.estado}}</h1>
                     </a>
-                        
                     {% endfor %}
-                
                 </ul>
-                
-              
             </div>
-
         </div>
     </main>
-
-    <ul>
-       
-    </ul>
-
     {% endblock %}
     
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
