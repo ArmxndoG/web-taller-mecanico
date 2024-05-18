@@ -215,6 +215,7 @@ def estatus_cita(request, cita_id):
         info_imagenes_fase.append({'imagen_fase': imagen_fase, 'servicio_id': servicio_id, 'fase_id': fase_id})
 
     return render(request, 'estatus_cita.html', {
+        
         'cita': cita,
         'info_imagenes_fase': info_imagenes_fase,
     })
