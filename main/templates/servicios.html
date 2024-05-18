@@ -16,17 +16,19 @@
                 /*padding-top: 50px; /* Espacio superior */
             }       
     </style>
+    <main class="container py-5">
+        <h1>Listado de Lista de Servicios</h1>
+        <ul>
+            {% for servicio in servicios %}
+                <li>
+                    <h2>{{ servicio.nombre }}</h2>
+                    <p>{{ servicio.descripcion }}</p>
+                    <!--<p>Precio: {{ servicio.precio }}</p>-->
+                </li>
+            {% endfor %}
+        </ul>
+    </main>
     
-    <h1>Listado de Lista de Servicios</h1>
-    <ul>
-        {% for servicio in servicios %}
-            <li>
-                <h2>{{ servicio.nombre }}</h2>
-                <p>{{ servicio.descripcion }}</p>
-                <!--<p>Precio: {{ servicio.precio }}</p>-->
-            </li>
-        {% endfor %}
-    </ul>
     {% endblock %}
 </body>
 </html>

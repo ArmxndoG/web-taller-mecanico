@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {%load static %} <!--Especifica que se va a cargar contenido estático-->
+    {% load static %} <!--Especifica que se va a cargar contenido estático-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> </title>
+    <title>Título de tu sitio web</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-
     <link rel="icon" href="{% static 'logo.png' %}" type="image/png">
-
 
     <style>
         /* Estilos personalizados */
         .navbar-nav .nav-link {
-            color: #007bff; /* Cambia el color del texto del menú a azul */
+            color: white; /* Cambia el color del texto del menú a blanco */
             transition: all 0.3s; /* Agrega una transición suave */
             border-radius: 20px; /* Hace los bordes más redondos */
             padding: 10px 20px; /* Aumenta el espacio alrededor del texto */
+            font-size: 18px; /* Aumenta el tamaño del texto */
         }
         .navbar-nav .nav-link:hover {
             background-color: #007bff; /* Cambia el fondo del menú al pasar el mouse */
@@ -26,12 +25,51 @@
             background-color: #007bff; /* Cambia el fondo del menú activo a azul */
             color: white; /* Cambia el color del texto del menú activo a blanco */
         }
+
+        body {
+                font-family: Arial, sans-serif;
+                background-color: #f8f9fa; /* Color de fondo */
+                color: #343a40; /* Color del texto */
+                /*padding-top: 50px; /* Espacio superior */
+            }   
+        
+        .footer {
+                margin-top: 100px; /* Puedes ajustar este valor según tus necesidades */
+        }
+        footer {
+    background-color: #f8f9fa; /* Color de fondo */
+    color: #6c757d; /* Color del texto */
+    padding: 20px 0; /* Espaciado interno superior e inferior */
+}
+
+/* Estilo para las columnas */
+footer .col {
+    text-align: center; /* Centrar el contenido */
+    padding: 0 15px; /* Espaciado interno horizontal */
+}
+
+/* Estilo para las imágenes */
+footer img {
+    width: 50px; /* Ancho de las imágenes */
+    margin-bottom: 10px; /* Margen inferior */
+}
+
+/* Estilo para los párrafos */
+footer p {
+    margin-bottom: 20px; /* Margen inferior */
+}
+
+/* Estilo para el contenedor */
+footer .container {
+    display: flex; /* Usar flexbox para alinear horizontalmente */
+    justify-content: space-around; /* Distribuir el espacio entre las columnas */
+}
     </style>
 </head>
 <body>
     
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-        <div class="container justify-content-center">
+        <div class="container justify-content-center"> <!-- Modificación aquí -->
             <a class="navbar-brand" href="/"><img src="{% static 'logo.png' %}" alt="" width="100px" height="100px" alt=""></a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,13 +100,13 @@
                     {% endif %}
                 </ul>
             </div>
-            <div>
+            <div class="navbar-nav">
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
                         </li>
-                    {% else %}
+                    {% else %} 
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'lista_de_servicios' %}">Servicios</a>
                         </li>
@@ -84,7 +122,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'iniciar_sesion' %}">Inicio de sesión</a>
                         </li>
-
                     {% endif %}
                 </ul>
             </div>
@@ -95,21 +132,24 @@
 
     {% endblock %}
 
-    <footer class="bg-light text-muted text-center py-2">
+    <footer class="bg-light text-muted text-center py-2 footer">
         <div class="container">
-            <div class="row">
-                <div class="col">
+            <div class="col">
+                <a href="https://www.google.com/maps/place/C.+Gral.+Ignacio+Mart%C3%ADnez+1453,+De+Tequisquiapan,+78250+San+Luis+Potos%C3%AD,+S.L.P." target="_blank">
                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAB5UlEQVR4nK2W20pVURSGP9RArTzdCPYWViDiAUSlre3AsldQQXwHA/UBVJA2qLd6IZp6oRcZhJeJdhcRgqcuxROCIBhj8+/FZDHXCfthwGKsf/zjsOaYe0M65IFvwI1sB3jLf8IUcAx8AJ7LBoBfwMRjxfMSb/C8M99Jlk5agZ/AhapEY7HKDX0SNMvJ9xH4qudaxZpGS1j8CfBXFZc5/msn2YmKaFNXhhrgyuGXSeMMqHATvAQOPF2dq7JSAhNvdxLUiRPGPtDsOt4Bmx7iLtCt55yEzd7I1wt898RtqJMAw0DBQxwD1ojGF2DU4/8MDLmOT8C4h1ilins877qAU6Da8248rFdQFz4MAr817xLq5XsfETOkLqJnFsIssKWTYbYNzMTw89IMsAe8igkoB1aBZdmKfFGwU/nDddgONBGPKn1wS1SZwG2SZhHW8j3wEGG3QKNHpB+4i4m7L3X5ws2WErXAEdARwwmm8jo8rxRYBKYTOHv6FsUtXs8g3g0cAs8SeMHJHAmf2RjUaDS+xQsj2K2oLY4KmkvJDba5EL43ItClG9Xd6DgMlyazmbDFhqfAH+cWTYNgm3cSjhu6KhYyiBs6pc0ksOT8sPiIWUZjMC27Uop/Cqx9q+4yZiuzmmnNm/Y/tbKCUC6raVEAAAAASUVORK5CYII=">
-                    <p>C. Gral. Ignacio Martínez 1453, De Tequisquiapan, 78250 San Luis Potosí, S.L.P.</p>
-                </div>
-                <div class="col">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD9klEQVR4nO2ZW2gVVxSGv3hJiyIGG2s1ESGCT4oRBW/0oaL2QVIQUUGRmKBYUOujiPok+tKKolgV2pf2zYrRtmiLiMGAt4AX0FL1wQtRBG+tFxKvIxv+gcXhzMyeMzmTBPLBQMisvfbsM3ut/a810E8/Pco3QDvQBVwFZtLHqAT2AUHB9QyooY8wHDilB+8E1gHVwDH977inn0HAVuBukR8kzXUH2AIMTLOIL4ArcnAfmFpw77HuNXv42ppxAUHBtdl3EVWKAzfoH2BcEZvluv8fUJvg745s55GNr+Xnto/xJ8AZDbgGfBZj2+K5xcJfsjsIfH1tl+Fdj1/abbEnsm/sjsk98Pb1VIZf+RgDK2Tvxo3OOrkH3r66ZOjixJc/NaYl6+QeePu6JcOJ+FOroHfjlmaZ3ANvX2EAu6yUhtUadyPL5B54+1onw19IR7XGvQMqSp3cA29f44EPwHNgGP6s1ATtWSb3IJWvUJZ862n/qTn0GnvTQpaY/e50UhKbZH8ZGJB18gRS+XIP/68GrEmwHQX8L9s5ETb3db+ebEyRn440gxZp0ANgSIzdQdk5RRzFjgjx16b7Ts22phCN29MsxGWeCxr4fUxsvJDNqoSaZod5M+HlxjqWeS6gQ4tw/lIxDXirlDorwuY7I1GKqeRifKkxl4BJwCPgvf5fNraZwB8S8eb+kM3FhG2I7p8whdIr/b2bMlNpahNX8hajSnWLszmaUMG1FdkyBzyzY2bqVeq6SZtiDtJHsjlY5HQPOanD9jrwEzCdnGnSQ3bGTD7TBP8uejF7TEqO6qDMMW9vJ72UwcBpPeTZmMBuAN6UkvPzZKSK/0DZJyqnLzaL2RUTMz3KBOChHvJQTJZqMNvsQNp+VF5MVrcxUPapiImZFyY1F9uOA5VMnOh0B+NNCdfccKf9S4/AnmFSc3uBAphrzqnC67BEaS7MB16bxUS9mTpzaD5VaRwqgkBx52qZat0LFfVjabFcWGgW83NMLDgF8HvBr+4eeKMEqGWskTJhh8b10XJ5M+E2+y0mm7k3tl5xsx/4PMFvs4nFJ+qjlZ3ZZtK/EgSka836UmN6Z4G25Bhy0GVhaj4X030shUbTCX2Wh06bYJoRHd084WiTJFy6zkUBhOVrV4xqLoUR8utqmdy02V6zt3/0KLx82GD0Xq40meb4TSWFUplhUv0CeoB6c4I7GfIDMDSljzqTSMpeGsdRqR7AW1PXrPEsc0eaXtvf2rY9jvuwet7Ezg21Z6N6zWONvLmUsidddirUBAx/5UC1/K/6pDFRn8eder5n0m1uIjItg/Rx6JS+AgQRV6sW1idwwbwWOKLs1in1uy2lpOmnH7qRj/1HkOKlz9sVAAAAAElFTkSuQmCC">
-                    <p>+524448112969</p>
-                </div>
-                <div class="col">
+                </a>
+                <p>C. Gral. Ignacio Martínez 1453, De Tequisquiapan, 78250 San Luis Potosí, S.L.P.</p>
+            </div>            
+            <div class="col">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD9klEQVR4nO2ZW2gVVxSGv3hJiyIGG2s1ESGCT4oRBW/0oaL2QVIQUUGRmKBYUOujiPok+tKKolgV2pf2zYrRtmiLiMGAt4AX0FL1wQtRBG+tFxKvIxv+gcXhzMyeMzmTBPLBQMisvfbsM3ut/a810E8/Pco3QDvQBVwFZtLHqAT2AUHB9QyooY8wHDilB+8E1gHVwDH977inn0HAVuBukR8kzXUH2AIMTLOIL4ArcnAfmFpw77HuNXv42ppxAUHBtdl3EVWKAzfoH2BcEZvluv8fUJvg745s55GNr+Xnto/xJ8AZDbgGfBZj2+K5xcJfsjsIfH1tl+Fdj1/abbEnsm/sjsk98Pb1VIZf+RgDK2Tvxo3OOrkH3r66ZOjixJc/NaYl6+QeePu6JcOJ+FOroHfjlmaZ3ANvX2EAu6yUhtUadyPL5B54+1onw19IR7XGvQMqSp3cA29f44EPwHNgGP6s1ATtWSb3IJWvUJZ862n/qTn0GnvTQpaY/e50UhKbZH8ZGJB18gRS+XIP/68GrEmwHQX8L9s5ETb3db+ebEyRn440gxZp0ANgSIzdQdk5RRzFjgjx16b7Ts22phCN29MsxGWeCxr4fUxsvJDNqoSaZod5M+HlxjqWeS6gQ4tw/lIxDXirlDorwuY7I1GKqeRifKkxl4BJwCPgvf5fNraZwB8S8eb+kM3FhG2I7p8whdIr/b2bMlNpahNX8hajSnWLszmaUMG1FdkyBzyzY2bqVeq6SZtiDtJHsjlY5HQPOanD9jrwEzCdnGnSQ3bGTD7TBP8uejF7TEqO6qDMMW9vJ72UwcBpPeTZmMBuAN6UkvPzZKSK/0DZJyqnLzaL2RUTMz3KBOChHvJQTJZqMNvsQNp+VF5MVrcxUPapiImZFyY1F9uOA5VMnOh0B+NNCdfccKf9S4/AnmFSc3uBAphrzqnC67BEaS7MB16bxUS9mTpzaD5VaRwqgkBx52qZat0LFfVjabFcWGgW83NMLDgF8HvBr+4eeKMEqGWskTJhh8b10XJ5M+E2+y0mm7k3tl5xsx/4PMFvs4nFJ+qjlZ3ZZtK/EgSka836UmN6Z4G25Bhy0GVhaj4X030shUbTCX2Wh06bYJoRHd084WiTJFy6zkUBhOVrV4xqLoUR8utqmdy02V6zt3/0KLx82GD0Xq40meb4TSWFUplhUv0CeoB6c4I7GfIDMDSljzqTSMpeGsdRqR7AW1PXrPEsc0eaXtvf2rY9jvuwet7Ezg21Z6N6zWONvLmUsidddirUBAx/5UC1/K/6pDFRn8eder5n0m1uIjItg/Rx6JS+AgQRV6sW1idwwbwWOKLs1in1uy2lpOmnH7qRj/1HkOKlz9sVAAAAAElFTkSuQmCC">
+                <p>+524448112969</p>
+            </div>
+            <div class="col">
+                <a href="mailto:automotriz1453sistemas@gmail.com">
                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACHElEQVR4nO2ZTWsTQRjHfxHbg+ghlwqpVIiH9thDL74cbU4e7Vfw6sXiTT20Rj+CFwW/gIIHRalCUr1IQDx5y0EiBYMvoaVQNVMWnoFhWZPZzEyyaecHQ9idJzP//zw7L5tAJBI5FswCD4FvgApcOkBd+vTGgzEIV6ly36eBjjR6kfBcMjLhDT0q40L57i8aKHIGmg4TtTntBhpFMBACFQ0cpww0HSbr1BhoeOzvaD9CH4BPch5Jj3LeUXShmdFfoukz8M7GeR94BJxh8pyS0/Bfm8zogAP5bAOrQzoYZSOzndSrosHUZGVgGWgZ2XgMlD0aGPY4lqXPvsS3RJO1gYSTwE1gV+7tANcJzzXgq/S5D9wz3s5yGdBcAN4adS+A+QDC54CnRj/vgSULfVYBJeAG0JP6n3LtizXgu7S9B9wGTuTQZx1QAZ4bcS+BBQfhFeCZ0d4r4LyDPusNxHbE/ofO6O9URpP7Tvry7IBnU8/sdsYzm0UV2BpxTimfBgatGjMZcT5WNRXCgF63nxjr9kdgxahfkXs2+8pEDGhqxs6ZlC9S9HVbYkZFhTaQcBrYlImp2/sBbEgdRTegmZVJvejxd041TgMhUNHAhFFHPgM9CQhx2nTlnGj7NSjojQTdoXjcFW2vBwXVZKf8I/+QVC0OWCEpyftIXTQl2q4O+9K6cSQoUvkH3LJ1fkXO/d0CCO+KlsvO+YxEIhSOQ0tMtEjPRwAqAAAAAElFTkSuQmCC">
-                    <p>automotriz1453sistemas@gmail.com</p>
-                </div>
+                </a>
+                <p>automotriz1453sistemas@gmail.com</p>
+            </div>
             </div>
         </div>
     </footer>
