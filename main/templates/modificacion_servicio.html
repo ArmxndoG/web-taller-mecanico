@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificacion de servicio</title>
+    {% extends 'layouts/base.html' %}
+</head>
+<body>
+
+    {% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 offset-md-4 mt-5">
+                    {{error}}
+                    <h1>{{servicio.nombre}}</h1>
+                    <div class="mt-5">
+                        <form method="POST" class="my-form">
+                            {% csrf_token %}
+                            {{form.as_p}}
+                            <button class="btn btn-primary">
+                                Actualizar
+                            </button>
+                        </form>
+                            
+                        </form>
+                        <form action="{% url 'eliminar_cita_cliente' servicio.id %}" method="POST" class="my-form">
+                            {% csrf_token %}
+                            <button class="btn btn-danger">
+                                Borrar
+                            </button>
+                        
+                        </form>
+                    </div>
+            
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+    
+    
+</body>
+</html>

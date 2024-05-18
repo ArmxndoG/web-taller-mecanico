@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de servicios</title>
+    {% extends 'layouts/base.html' %}
+</head>
+<body>
+    {% block content %}
+    <h1>Gestión de servicios</h1>
+    <main class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                
+                <h1 class="text-center display-3 py-5"></h1>
+                
+                <ul class="list-group">
+                    {% for servicio in servicios %}
+                    <a class="list-group-item" href="{% url 'modificar_servicio' servicio.id %}">
+                        <header class="d-flex justify-content-between">
+                        
+                            <h2>{{servicio.nombre}}</h2>
+                        </header>
+                            <p>{{servicio.descripcion}}</p>
+                            <p>{{cita.precio}}</p>
+                            
+                            <h1 class="fw-bold text-success">{{cita.estado}}</h1>
+      
+                    </a>
+                        
+                    {% endfor %}
+                
+                </ul>
+                
+              
+            </div>
+
+        </div>
+    </main>
+
+    <ul>
+       
+    </ul>
+
+    {% endblock %}
+    
+</body>
+</html>
