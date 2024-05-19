@@ -13,43 +13,102 @@
             <section class="col-md-4 offset-md-4 mt-5">
                 <form action="{% url 'citas' %}" method="POST" class="card card-body">
                     <h1 class="text-center">Agendar Cita</h1>
-                    {{ error }}
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                    {% endif %}
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="modelo_carro">Modelo de carro</label>
-                        <input type="text" name="modelo_carro" id="modelo_carro" class="form-control" placeholder="Escribe el modelo de tu carro">
+                        <input type="text" name="modelo_carro" id="modelo_carro" class="form-control {% if form.modelo_carro.errors %}is-invalid{% endif %}" placeholder="Escribe el modelo de tu carro">
+                        {% for error in form.modelo_carro.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
                     </div>
                     <div class="mb-3">
                         <label for="color">Color</label>
-                        <input type="text" name="color" id="color" class="form-control" placeholder="Escribe el color de tu carro">
+                        <input type="text" name="color" id="color" class="form-control {% if form.color.errors %}is-invalid{% endif %}" placeholder="Escribe el color de tu carro">
+                        {% for error in form.color.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
                     </div>
                     <div class="mb-3">
                         <label for="placas">Placas</label>
-                        <input type="text" name="placas" id="placas" class="form-control" placeholder="Escribe las placas de tu carro">
+                        <input type="text" name="placas" id="placas" class="form-control {% if form.placas.errors %}is-invalid{% endif %}" placeholder="Escribe las placas de tu carro">
+                        {% for error in form.placas.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
                     </div>
                     <div class="mb-3">
                         <label for="fecha">Fecha</label>
-                        <input type="date" name="fecha" id="fecha" class="form-control" min="{{ timezone.now|date:'Y-m-d' }}">
+                        <input type="date" name="fecha" id="fecha" class="form-control {% if form.fecha.errors %}is-invalid{% endif %}" min="{{ timezone.now|date:'Y-m-d' }}">
+                        {% for error in form.fecha.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
                     </div>
                     <div class="mb-3">
                         <label for="hora">Hora</label>
-                        <select name="hora" id="hora" class="form-control">
+                        <select name="hora" id="hora" class="form-control {% if form.hora.errors %}is-invalid{% endif %}">
                             <option value="09:00">9:00</option>
                             <option value="10:00">10:00</option>
                             <option value="11:00">11:00</option>
                         </select>
+                        {% for error in form.hora.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
                     </div>
                     <div class="mb-3">
                         <label for="servicios">Servicios</label>
-                        {{ form.servicios }}
+                        <div class="{% if form.servicios.errors %}is-invalid{% endif %}">
+                            {{ form.servicios }}
+                        </div>
+                        {% for error in form.servicios.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                        {% endfor %}
                     </div>
                     <button class="btn btn-primary d-block mx-auto mt-4">
                         Agendar cita
                     </button>
+                    {% if exito %}
+                        <div class="alert alert-success" role="alert">
+                            Tu cita se ha agendado con éxito.
+                        </div>
+                    {% endif %}
+
+                    {% if detalles_cita %}
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#detallesCollapse" aria-expanded="false" aria-controls="detallesCollapse">
+                            Detalles de la cita
+                        </button>
+                        <div class="collapse" id="detallesCollapse">
+                            <div class="card card-body">
+                                <h5>Detalles de la cita:</h5>
+                                <ul>
+                                    <li>Modelo de carro: {{ detalles_cita.modelo_carro }}</li>
+                                    <li>Color: {{ detalles_cita.color }}</li>
+                                    <li>Placas: {{ detalles_cita.placas }}</li>
+                                    <li>Fecha: {{ detalles_cita.fecha }}</li>
+                                    <li>Hora: {{ detalles_cita.hora }}</li>
+                                    <li>Servicios:</li>
+                                    <ul>
+                                        {% for servicio in detalles_cita.servicios %}
+                                            <li>{{ servicio.nombre }} - Precio: ${{ servicio.precio }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </ul>
+                                <p style="font-size: 12px; color: #6c757d;">* Los precios son aproximados.</p>
+                            </div>
+                        </div>
+                    {% endif %}
                 </form>
             </section>
         </div>
     </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var fechaInput = document.getElementById('fecha');
+            var today = new Date().toISOString().split('T')[0];
+            fechaInput.setAttribute('min', today);
+        });
+    </script>
     {% endblock %}
 </body>
 </html>

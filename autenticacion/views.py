@@ -7,6 +7,7 @@ from .models import Cita,DetalleCita,Servicio,Fase, ImagenFase,Servicio
 from django.contrib.auth import login,logout,authenticate
 from django.db import IntegrityError #Error de integridad en la base de datos, para manejar la excepción
 from django.contrib.auth.decorators import login_required #Función decoradora para verificar que haya un usuario logeado (Protejer URL's)
+from django.contrib import messages
 
 # Create your views here.
 
@@ -83,33 +84,42 @@ def inicio_sesion(request):
 
 @login_required         
 def agendarCita(request):
-    
-    if request.method == 'GET':
-        return render(request,'citas.html',{
-            'form':CitaForm
-            
-        })
-    else:
+    if request.method == 'POST':
         cita_form = CitaForm(request.POST)
-        
         if cita_form.is_valid():
             cita = cita_form.save(commit=False)
-            cita.usuario = request.user #agregando el campo id_usuario con la sesión iniciada
-            cita.save()#Guardando los datos en la cita
+            cita.usuario = request.user
+            cita.save()
             
-             # Obtener el servicio seleccionado en el checkbox
             servicios_seleccionados = cita_form.cleaned_data['servicios']
-            #form.save_m2m()  # Para guardar las relaciones many-to-many
             for servicio in servicios_seleccionados:
-                DetalleCita.objects.create(cita=cita, servicio=servicio)#Damos de alta los datos en detalle_cita
-            
-            #form.save_m2m() #Guarda la relación muchos a muchos
-            return redirect('home')
-        else:
-            return render(request, 'citas.html',{
-                'form': CitaForm,
-                'error': 'Algo salio mal, intente de nuevo'
+                DetalleCita.objects.create(cita=cita, servicio=servicio)
+
+            # Mensaje de éxito
+            messages.success(request, 'Tu cita se ha agendado con éxito.')
+
+            # Detalles de la cita
+            detalles_cita = {
+                'modelo_carro': cita.modelo_carro,
+                'color': cita.color,
+                'placas': cita.placas,
+                'fecha': cita.fecha,
+                'hora': cita.hora,
+                'servicios': [{'nombre': servicio.nombre, 'precio': servicio.precio} for servicio in cita.servicios.all()] 
+            }
+
+            return render(request, 'citas.html', {
+                'form': CitaForm(),
+                'exito': True,
+                'detalles_cita': detalles_cita
             })
+    else:
+        cita_form = CitaForm()
+
+    return render(request, 'citas.html', {
+        'form': cita_form
+        #'error': 'Algo salio mal, intente de nuevo'
+    })
             
 @login_required
 def altaServicio(request):
