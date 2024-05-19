@@ -22,23 +22,26 @@
          <!-- Lista de imágenes -->
          <div class="row mt-4">
             <!-- Iterar sobre la información de las imágenes de la fase -->
-            {% for info_imagen_fase in info_imagenes_fase %}
-            <div class="col-md-12">
-                <div class="card mb-4">
-                    <!-- Mostrar el nombre de la fase -->
-                    <div class="card-header">
-                        <h3 class="card-title">{{ info_imagen_fase.imagen_fase.fase.nombre }}</h3>
-                    </div>
-                    <div class="card-body">
-                        <!-- Mostrar la imagen -->
-                        <img src="{{ info_imagen_fase.imagen_fase.imagen.url }}" class="card-img-top" alt="Imagen de la fase">
+            {% for servicio in servicios %}
+                <h2>{{ servicio.nombre }}</h2>
+                {% for info_imagen_fase in info_imagenes_fase %}
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <!-- Mostrar el nombre de la fase -->
+                        <div class="card-header">
+                            <h3 class="card-title">{{ info_imagen_fase.imagen_fase.fase.nombre }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- Mostrar la imagen -->
+                            <img src="{{ info_imagen_fase.imagen_fase.imagen.url }}" class="card-img-top" alt="Imagen de la fase">
+                        </div>
                     </div>
                 </div>
-            </div>
-            {% empty %}
-            <div class="col-md-12">
-                <div class="alert alert-info" role="alert">No hay imágenes disponibles para esta fase.</div>
-            </div>
+                {% empty %}
+                <div class="col-md-12">
+                    <div class="alert alert-info" role="alert">No hay imágenes disponibles para esta fase.</div>
+                </div>
+                {% endfor %}
             {% endfor %}
         </div>
     </div>
