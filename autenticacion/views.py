@@ -204,7 +204,7 @@ def detalle_cita_cliente(request,cita_id):
                 return redirect('lista_citas_cliente')
 
         except ValueError:
-            return render(request, 'deralle_cita_cliente',{
+            return render(request, 'detalle_cita_cliente',{
                 'cita': cita,
                 'form': form,
                 'error': "Error al actualizar cita",
