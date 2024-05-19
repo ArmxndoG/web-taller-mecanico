@@ -291,6 +291,7 @@ def estatus_cita(request, cita_id):
         
         'cita': cita,
         'info_imagenes_fase': info_imagenes_fase,
+        'servicios': servicios
     })
     
 '''@login_required
