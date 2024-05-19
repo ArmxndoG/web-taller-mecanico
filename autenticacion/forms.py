@@ -51,7 +51,7 @@ class CitaForm(forms.ModelForm):
             raise forms.ValidationError("La fecha no puede ser en el pasado.")
         citas_del_dia = Cita.objects.filter(fecha=fecha).count()
         if citas_del_dia >= 5:
-            raise forms.ValidationError("No se pueden agendar más de 5 citas para este día.")
+            raise forms.ValidationError("Dia lleno, seleccione otra fecha.")
         return fecha
 
     def clean(self):
@@ -61,7 +61,7 @@ class CitaForm(forms.ModelForm):
         if fecha:
             citas_del_dia = Cita.objects.filter(fecha=fecha).count()
             if citas_del_dia >= 5:
-                self.add_error('fecha', "No se pueden agendar más de 5 citas para este día.")
+                self.add_error('fecha', "Dia lleno, seleccione otra fecha.")
         return cleaned_data
         
 class ImagenForm(forms.ModelForm):
