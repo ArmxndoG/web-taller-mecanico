@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estatus de cita</title>
+    <!-- Bootstrap CSS -->
+    
     {% extends 'layouts/base.html' %}
 </head>
 <body>
     {% block content %}
-    <div class="container">
+    <div class="container mt-5">
+        <h1 class="text-center">Estatus de Cita</h1>
         <div class="row">
             <div class="col-md-12">
-                <h1>Estatus de Cita</h1>
+                
                 <h2>{{ cita.modelo_carro }}</h2>
                 <h2>{{ info_imagen_fase.imagen_fase.servicio.nombre }}</h2>
                 <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
@@ -19,35 +22,47 @@
             </div>
         </div>
 
-         <!-- Lista de imágenes -->
-         <div class="row mt-4">
-            <!-- Iterar sobre la información de las imágenes de la fase -->
+        <!-- Lista de servicios -->
+        <div class="accordion" id="accordionServices">
             {% for servicio in servicios %}
-                <h2>{{ servicio.nombre }}</h2>
-                {% for info_imagen_fase in info_imagenes_fase %}
-                <div class="col-md-12">
-                    <div class="card mb-4">
-                        <!-- Mostrar el nombre de la fase -->
-                        <div class="card-header">
-                            <h3 class="card-title">{{ info_imagen_fase.imagen_fase.fase.nombre }}</h3>
-                        </div>
+                <div class="card">
+                    <div class="card-header" id="heading{{ servicio.id }}">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ servicio.id }}" aria-expanded="true" aria-controls="collapse{{ servicio.id }}">
+                                {{ servicio.nombre }}
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapse{{ servicio.id }}" class="collapse" aria-labelledby="heading{{ servicio.id }}" data-parent="#accordionServices">
                         <div class="card-body">
-                            <!-- Mostrar la imagen -->
-                            <img src="{{ info_imagen_fase.imagen_fase.imagen.url }}" class="card-img-top" alt="Imagen de la fase">
+                            <div class="row">
+                                {% for info_imagen_fase in info_imagenes_fase %}
+                                    {% if info_imagen_fase.servicio_id == servicio.id %}
+                                        <div class="col-md-12">
+                                            <div class="card mb-4">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">{{ info_imagen_fase.imagen_fase.fase.nombre }}</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <img src="{{ info_imagen_fase.imagen_fase.imagen.url }}" class="card-img-top" alt="Imagen de la fase">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
-                {% empty %}
-                <div class="col-md-12">
-                    <div class="alert alert-info" role="alert">No hay imágenes disponibles para esta fase.</div>
-                </div>
-                {% endfor %}
             {% endfor %}
         </div>
     </div>
-    
 
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     {% endblock %}
-        
 </body>
 </html>

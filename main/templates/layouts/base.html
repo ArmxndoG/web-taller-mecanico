@@ -69,7 +69,9 @@ footer .container {
 <body>
     
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        
         <div class="container justify-content-center"> <!-- Modificación aquí -->
+            
             <a class="navbar-brand" href="/"><img src="{% static 'logo.png' %}" alt="" width="100px" height="100px" alt=""></a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,6 +80,7 @@ footer .container {
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav">
                     {% if user.is_authenticated and user.is_staff %}
+                       
                         
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'panel_encargado' %}">Gestionar Citas</a>
@@ -86,6 +89,7 @@ footer .container {
                             <a class="nav-link" href="{% url 'gestion_servicios' %}">Gestionar Servicios</a>
                         </li>
                     {% elif user.is_authenticated %}
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'lista_de_servicios' %}">Servicios</a>
                         </li>
@@ -108,12 +112,14 @@ footer .container {
                     {% endif %}
                 </ul>
             </div>
-            <div class="navbar-nav">
+            <div class="navbar-nav ms-auto">
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}
+                    
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
                         </li>
+                        
                     {% else %} 
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'lista_de_servicios' %}">Servicios</a>
@@ -135,7 +141,7 @@ footer .container {
             </div>
         </div>
     </nav>
-
+    
     {% block content %}
 
     {% endblock %}

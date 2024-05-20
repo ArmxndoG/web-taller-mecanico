@@ -7,9 +7,43 @@
     {% extends 'layouts/base.html' %}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+        .container {
+            margin-top: 2rem;
+        }
         .list-group-item {
             flex-direction: column;
             align-items: flex-start;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .list-group-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .list-group-item h2 {
+            font-size: 1.25rem;
+            color: #007bff;
+        }
+        .list-group-item p {
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -28,11 +62,11 @@
                     {% for servicio in servicios %}
                     <a class="list-group-item list-group-item-action mb-3" href="{% url 'modificar_servicio' servicio.id %}">
                         <header class="d-flex justify-content-between align-items-center w-100">
-                            <h2 class="h5 mb-0 font-weight-bold">{{servicio.nombre}}</h2>
+                            <h2 class="h2 mb-0 font-weight-bold">{{servicio.nombre}}</h2>
+                            <span class="badge badge-success">{{servicio.estado}}</span>
                         </header>
-                        <p class="mb-1">{{servicio.descripcion}}</p>
-                        <p class="mb-1">{{servicio.precio}}</p>
-                        <h1 class="fw-bold text-success">{{servicio.estado}}</h1>
+                        <p class="mb-1 mt-3">{{servicio.descripcion}}</p>
+                        <p class="h4 mb-1 mt-3">{{servicio.precio}}</p>
                     </a>
                     {% endfor %}
                 </ul>

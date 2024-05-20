@@ -13,7 +13,7 @@
             <section class="col-md-4 offset-md-4 mt-5">
                 <form action="/iniciar_sesion/" method="POST" class = "card card-body">
                     <h1 class="text-center">Inicio de Sesión</h1>
-                    <p class="text-center mt-3">Si no tienes una cuenta, <a href="{% url 'registro' %}">crea una cuenta</a></p>
+                    <p class="text-center mt-3">Si no tienes una cuenta, <a href="{% url 'registro' %}">Crea una cuenta</a></p>
                     {{error}}
                     {% csrf_token %} <!--token generado por el servidor--> 
                     

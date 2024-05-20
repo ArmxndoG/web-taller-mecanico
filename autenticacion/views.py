@@ -267,6 +267,48 @@ def panel_encargado(request):
         'citas_finalizadas': citas_finalizadas
     })
     
+
+'''def estatus_cita(request, cita_id):
+    # Obtener la cita
+    cita = get_object_or_404(Cita, id=cita_id)
+    
+    # Obtener todas las imágenes asociadas a la cita
+    imagenes_fase = ImagenFase.objects.filter(cita_id=cita_id)
+    
+    # Obtener todos los servicios asociados a la cita
+    servicios = cita.servicios.all()
+    
+    # Crear un diccionario para almacenar el progreso de cada servicio
+    progreso_servicios = {}
+
+    for servicio in servicios:
+        # Obtener todas las fases para el servicio actual
+        fases = Fase.objects.filter(servicio=servicio)
+        total_fases = fases.count()
+        
+        # Contar cuántas fases tienen imágenes
+        fases_con_imagen = imagenes_fase.filter(servicio=servicio).values('fase').distinct().count()
+        
+        # Calcular el porcentaje de progreso
+        if total_fases > 0:
+            porcentaje_progreso = (fases_con_imagen / total_fases) * 100
+        else:
+            porcentaje_progreso = 0
+        
+        # Guardar el progreso en el diccionario
+        progreso_servicios[servicio.id] = {
+            'total_fases': total_fases,
+            'fases_con_imagen': fases_con_imagen,
+            'porcentaje_progreso': porcentaje_progreso
+        }
+        print(progreso_servicios)
+
+    return render(request, 'estatus_cita.html', {
+        'cita': cita,
+        'servicios': servicios,
+        'progreso_servicios': progreso_servicios,
+    })'''
+@login_required
 def estatus_cita(request, cita_id):
     # Obtener la cita
     cita = get_object_or_404(Cita, id=cita_id)
@@ -275,6 +317,8 @@ def estatus_cita(request, cita_id):
     
     servicios = cita.servicios.all()
     print(servicios)
+    
+    
 
     # Lista para almacenar información adicional sobre las imágenes de la fase
     info_imagenes_fase = []
