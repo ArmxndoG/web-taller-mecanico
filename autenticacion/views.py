@@ -529,6 +529,13 @@ def modificar_estado_cita(request, cita_id):
     cita.estado = 'en proceso'
     cita.save()
     return redirect('panel_encargado')
+@login_required
+def modificar_estado_cita_finalizada(request, cita_id):
+    cita = get_object_or_404(Cita, id=cita_id)
+    # Modificar el estado de la cita de "en espera" a "en proceso"
+    cita.estado = 'finalizada'
+    cita.save()
+    return redirect('panel_encargado')
 
 def eliminar_cita(request, cita_id):
     cita = get_object_or_404(Cita, id=cita_id)

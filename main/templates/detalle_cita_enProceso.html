@@ -24,6 +24,14 @@
                 <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
                 <p><strong>Hora:</strong> {{ cita.hora }}</p>
             </div>
+            <div class="d-flex justify-content-between align-items-center">
+                
+                <form action="{% url 'modificar_estado_cita_finalizada' cita.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary" onclick="return confirm('¿Estás seguro marcar esta cita a finalizada?')">Marcar como finalizada</button>
+
+                </form>
+            </div>
         </div>
         
         <div class="card">
