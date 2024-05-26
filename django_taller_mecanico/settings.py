@@ -101,7 +101,7 @@ WSGI_APPLICATION = 'django_taller_mecanico.wsgi.application'
 }'''
 DATABASES = {
     'default': dj_database_url.config( 
-        default='postgresql://postgres:postgres@localhost/postgres',
+        default='postgresql://postgres:postgres@localhost:5432/mysite',
         conn_max_age=600
     )
 }
