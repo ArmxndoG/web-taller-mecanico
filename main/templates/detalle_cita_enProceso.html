@@ -4,8 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle de la cita</title>
-    {% extends 'layouts/base.html' %}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .toggle-switch .custom-control {
+            margin-left: 10px;
+        }
+    </style>
+    {% extends 'layouts/base.html' %}
 </head>
 <body>
     {% block content %}
@@ -13,8 +23,17 @@
         <h1 class="text-center mb-4">Detalle de Cita en Proceso</h1>
         
         <div class="card mb-4">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h2 class="h4">Información de la Cita</h2>
+                <div class="toggle-switch">
+                    <form action="{% url 'modificar_estado_cita_finalizada' cita.id %}" method="post" id="finalizarForm">
+                        {% csrf_token %}
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="finalizarSwitch" onchange="confirmSubmit(event)">
+                            <label class="custom-control-label" for="finalizarSwitch">Marcar como finalizada</label>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="card-body">
                 <p><strong>Id cita:</strong> {{ cita.id }}</p>
@@ -23,14 +42,6 @@
                 <p><strong>Placas:</strong> {{ cita.placas }}</p>
                 <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
                 <p><strong>Hora:</strong> {{ cita.hora }}</p>
-            </div>
-            <div class="d-flex justify-content-between align-items-center">
-                
-                <form action="{% url 'modificar_estado_cita_finalizada' cita.id %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary" onclick="return confirm('¿Estás seguro marcar esta cita a finalizada?')">Marcar como finalizada</button>
-
-                </form>
             </div>
         </div>
         
@@ -49,10 +60,21 @@
             </div>
         </div>
     </div>
-    {% endblock %}
-    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function confirmSubmit(event) {
+            if (!confirm('¿Estás seguro de marcar esta cita como finalizada?')) {
+                event.preventDefault();
+                document.getElementById('finalizarSwitch').checked = false;
+            } else {
+                document.getElementById('finalizarForm').submit();
+            }
+        }
+    </script>
+    {% endblock %}
+    
+    
 </body>
 </html>

@@ -226,6 +226,7 @@ def lista_citas_cliente(request):
     citas_en_espera = Cita.objects.filter(usuario = request.user, estado = "pendiente")
     citas_en_proceso = Cita.objects.filter(usuario = request.user, estado = "en proceso")
     citas_finalizadas = Cita.objects.filter(usuario = request.user, estado = "finalizada")
+    print(citas_finalizadas)
     titulo = "Citas del cliente"
     return render(request, "lista_citas_cliente.html",{
         'titulo': titulo,

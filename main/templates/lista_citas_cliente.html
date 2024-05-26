@@ -66,6 +66,31 @@
                     </ul>
                 </div>
                 {% endif %}
+
+                {% if citas_finalizadas %}
+                <div>
+                    <h2 class="text-center">Citas Finalizadas</h2>
+                    <ul class="list-group">
+                        {% for cita in citas_finalizadas %}
+                            <a class="list-group-item list-group-item-action" href="{% url 'estatus_cita' cita.id %}">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h3 class="mb-0 fw-bold text-success">Ya puede pasar por su vehículo</h3>
+                                        <p class="mb-1"><strong>Usuario:</strong> {{ cita.usuario }}</p>
+                                        <p class="mb-1"><strong>Modelo del Carro:</strong> {{ cita.modelo_carro }}</p>
+                                        <p class="mb-1"><strong>Color:</strong> {{ cita.color }}</p>
+                                        <p class="mb-1"><strong>Placas:</strong> {{ cita.placas }}</p>
+                                        <p class="mb-1"><strong>Fecha:</strong> {{ cita.fecha }}</p>
+                                        <p class="mb-1"><strong>Hora:</strong> {{ cita.hora }}</p>
+                                    </div>
+                                    <h5 class="mb-0 fw-bold text-success">{{ cita.estado }}</h5>
+                                    
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
             </div>
         </div>
     </main>
